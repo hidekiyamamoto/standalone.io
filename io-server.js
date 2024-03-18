@@ -35,7 +35,7 @@ function serveContentForUser(endpoint, req, res, decodedClaims) {
       '<meta charset="UTF-8">' +
       '<link href="style.css" rel="stylesheet" type="text/css" media="screen" />' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-      '<title>Sample Profile Page</title>' +
+      '<title>standalone.io</title>' +
       '<body>' +
       '<div id="container">' +
       '  <h3>Welcome to Session Management Example App, '+( userRecord.displayName || 'N/A') +'</h3>' +
@@ -98,7 +98,7 @@ function checkIfSignedIn(url) {
       // User already logged in. Redirect to profile page.
       admin.auth().verifySessionCookie(sessionCookie).then(function(decodedClaims) {
 		
-        res.redirect('/profile');
+        res.redirect('/app');
       }).catch(function(error) {
         next();
       });
@@ -128,7 +128,7 @@ app.use(checkIfSignedIn('/',));
 
 app.use('/', express.static('www-static'));
 /** Get profile endpoint. */
-app.get('/profile', function (req, res) {
+app.get('/app', function (req, res) {
   // Get session cookie.
   const sessionCookie = req.cookies.session || '';
   // Get the session cookie and verify it. In this case, we are verifying if the
@@ -136,7 +136,7 @@ app.get('/profile', function (req, res) {
   admin.auth().verifySessionCookie(sessionCookie, true /** check if revoked. */)
     .then(function(decodedClaims) {
       // Serve content for signed in user.
-      return serveContentForUser('/profile', req, res, decodedClaims);
+      return serveContentForUser('/app', req, res, decodedClaims);
     }).catch(function(error) {
       // Force user to login.
       res.redirect('/');

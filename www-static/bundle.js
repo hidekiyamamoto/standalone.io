@@ -88,7 +88,7 @@ const handleSignedInUser = function(user) {
     return postIdTokenToSessionLogin('/sessionLogin', idToken, csrfToken)
       .then(function() {
         // Redirect to profile on success.
-        window.location.assign('/profile');
+        window.location.assign('/app');
       }, function(error) {
         // Refresh page on error.
         // In all cases, client side state should be lost due to in-memory
