@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>IAMFUCKINGART</title>
+<html><head><meta charset="UTF-8"><title>standalone.io</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
@@ -37,12 +37,12 @@ var loadBG=function(){
 var loadBGK=function(Xmode){let zfactor=200;if(Xmode=='v'){zfactor=50}
 	var ks,kx,ky;
 	var images=[
-		'https://iamfuckingart.com/static/IAMFUCKINGART.webp','https://iamfuckingart.com/static/barresi.jpg',
-		'https://iamfuckingart.com/static/k.webp','https://iamfuckingart.com/static/kk.webp',
-		'https://iamfuckingart.com/static/kkk.webp','https://iamfuckingart.com/static/kkkk.webp',
-		'https://iamfuckingart.com/static/kkkkk.webp','https://iamfuckingart.com/static/IAMFUCKINGART2.webp',
-		'https://iamfuckingart.com/static/IAMFUCKINGART.webp',
-		'https://iamfuckingart.com/static/j.webp'];
+		'https://standalone.io/static/IAMFUCKINGART.webp','https://iamfuckingart.com/static/barresi.jpg',
+		'https://standalone.io/static/k.webp','https://iamfuckingart.com/static/kk.webp',
+		'https://standalone.io/static/kkk.webp','https://iamfuckingart.com/static/kkkk.webp',
+		'https://standalone.io/static/kkkkk.webp','https://iamfuckingart.com/static/IAMFUCKINGART2.webp',
+		'https://standalone.io/static/IAMFUCKINGART.webp',
+		'https://standalone.io/static/j.webp'];
 	var rndImg=function(){return images[Math.floor(Math.random()*images.length)];};
 	var opts={imgURL:rndImg(),speed:0.001,segmentSize:Math.floor(Math.random()*150)+zfactor,smoothing:0.4};
 	var Set=function(){};
@@ -124,11 +124,11 @@ const firebaseConfig = {
 	measurementId: "G-K1EJDR8DNH"
 };var app=firebase.initializeApp(firebaseConfig);
 	//const analytics = getAnalytics(app);
-var uiConfig={//signInSuccessUrl: 'https://iamfuckingart.com',
+var uiConfig={//signInSuccessUrl: 'https://standalone.io',
 	signInOptions:[{provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,scopes:['https://www.googleapis.com/auth/userinfo.email'],
 			customParameters:{prompt:'select_account'/*Forces account selection even when one account is available.*/}
 		},firebase.auth.EmailAuthProvider.PROVIDER_ID,firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID],
-		tosUrl: 'https://iamfuckingart.com',privacyPolicyUrl:'https://iamfuckingart.com',
+		tosUrl: 'https://standalone.io',privacyPolicyUrl:'https://standalone.io',
 };
 if(!window.X){window.X={};X.users=firebase.firestore().collection('users');X.usernames=firebase.firestore().collection('usernames');}
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
