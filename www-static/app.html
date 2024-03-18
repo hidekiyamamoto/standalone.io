@@ -115,13 +115,13 @@ var loadBGK=function(Xmode){let zfactor=200;if(Xmode=='v'){zfactor=50}
 /*#######################################################################################################################################*/
 /*#######################################################################################################################################*/
 const firebaseConfig = {
-apiKey:"AIzaSyB1Ihsvt8WVTpolvc6EM1s0Ej09RkBNv8M",
-authDomain:"iamfuckingart.firebaseapp.com",
-projectId:"iamfuckingart",
-storageBucket:"iamfuckingart.appspot.com",
-messagingSenderId:"207344014403",
-appId:"1:207344014403:web:3268bcaaa1fdb46cecb0f6",
-measurementId:"G-5R60E9Z4W4"
+	apiKey: "AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
+	authDomain: "standalone-io.firebaseapp.com",
+	projectId: "standalone-io",
+	storageBucket: "standalone-io.appspot.com",
+	messagingSenderId: "632415905019",
+	appId: "1:632415905019:web:b895dbd8bd6d1260b33c5e",
+	measurementId: "G-K1EJDR8DNH"
 };var app=firebase.initializeApp(firebaseConfig);
 	//const analytics = getAnalytics(app);
 var uiConfig={//signInSuccessUrl: 'https://iamfuckingart.com',
@@ -136,29 +136,20 @@ firebase.auth().onAuthStateChanged(async function(user){
 	if(user){var displayName = user.displayName;var email = user.email;console.log(email);var emailVerified = user.emailVerified;
 		toggleHeader(true);
 		if(email){X.uid=user.uid;let dr=await X.users.doc(user.uid);let d=await dr.get();
-			if(!d.exists){dr.set({email:email});};X.ucoll=firebase.firestore().collection('users/'+user.uid+'/redirects');}else{X.uid=false;
+			if(!d.exists){dr.set({email:email});};X.ucoll=firebase.firestore().collection('users/'+user.uid+'/redirects');}
+		else{X.uid=false;
 			let sss=await(await firebase.firestore().collection('settings').doc('settings')).get();sss=await sss.data();
 			X.coll=firebase.firestore().collection('users/'+sss.masteruid+'/redirects');
 			X.ucoll=X.coll;}
-			let ddr=await X.usernames.where('uid','==',user.uid);let dd=await ddr.get();
-			if(dd.docs.length==0){ddr=await X.usernames.doc(user.uid);ddr.set({uid:user.uid});X.uname=user.uid;}else{X.uname=dd.docs[0].id;}
+		let ddr=await X.usernames.where('uid','==',user.uid);let dd=await ddr.get();
+		if(dd.docs.length==0){ddr=await X.usernames.doc(user.uid);ddr.set({uid:user.uid});X.uname=user.uid;}else{X.uname=dd.docs[0].id;}
 		reloadlist();
 		//user.getIdToken().then(function(accessToken){});
 	}else{toggleHeader(false);ui.start('#firebaseui-auth-container', uiConfig);}
 },function(error){console.log(error);});
-let singleuid='<li class="joy"><button onclick="deleteOne(\'%DOCID\')" class="lc"><i class="fa-solid fa-trash-can"></i></button><button onclick="saveOne(\'%DOCID\',this)"><i class="fa-solid fa-floppy-disk"></i></button><input onkeyup="onkeyupuri(this,%R)" onchange="onkeyupuri(this,%R);" type="text" value="%URI" /></li>';
-let singleano='<li class="joy nolog">%URI</li>';
-let anointro='<span id="anoinfo">You are logged in anonymously therefore you can only view the master list.</span><br/><div style="width:90%;text-align:left;display:inline-block;"></div><br/><ul>';
-let uidintro='<br /><div style="width:90%;text-align:left;display:inline-block;"><button onclick="addOne()" class="addb"><i class="fa-solid fa-plus"></i></button><button onclick="reloadlist()" class="relb"><i class="fa-solid fa-arrows-rotate"></i></button>###</div><br/><ul>';
-let usernamepicker='<span class="upicker"><i class="fa-solid fa-pencil" style="margin-right:5px;float:right;"></i>https://iamfuckingart.com/<input type="text" value="%UNAME" width="300px" id="newuser" onkeyup="usernamekepress(this)"/></span>';
-usernamepicker=usernamepicker+'<button onclick="changeUsername()" class="invisible" id="userchange"><i class="fa fa-check-double"></i></button><span id="ucheck">&nbsp;</span>';
-var reloadlist=async function(authorized){let tgt=document.getElementById('a');tgt.innerHTML='';
-	let rr=await X.ucoll.orderBy("date","asc");rr=await rr.get();let dr=false;let dd=false;
-	let output=anointro;let single=singleano;X.cache={};
-	if(X.uid){output=uidintro;single=singleuid;output=output.replace('###',usernamepicker.replace('%UNAME',X.uname));}
-	for(let r=rr.docs.length-1;r>-1;r--){dr=await rr.docs[r].ref.get();dd=await dr.data();
-		output=output+single.replace(/%DOCID/g,rr.docs[r].ref.id).replace('%URI',dd.uri).replace(/%R/g,r);X.cache[r]=dd.uri;}
-	tgt.innerHTML=output+'</ul>';
+var reloadlist=async function(){let tgt=document.getElementById('a');
+	tgt.innerHTML='hallo';
+
 };
 
 var testuser=async function(){let nu=document.getElementById('newuser').value;let u=document.getElementById('ucheck');
@@ -314,18 +305,13 @@ var showinfo=function(){let ssssss=document.getElementById('y').classList.contai
 .firebaseui-id-page-callback{display:none}
 .xmodeh #link{width:60vh}
 .xmodev #link{width:75vw}
-</style></head><body onload="loadBG()"><canvas id="canv" ></canvas><h1 id="ifka-header">I AM FUCKING ART</h1><button
+</style></head><body onload="loadBG()"><canvas id="canv" ></canvas><h1 id="ifka-header">standalone.io</h1><button
 	id="infoB" onclick="showinfo()" class="invisible"><i class="fa-solid fa-question-mark"></i></button><button
 	id="signout" onclick="firebase.auth().signOut()" class="invisible"><i class="fa-solid fa-person-through-window"></i></button><div id="h" class="invisible"><div id="k"><br/>
 <div id="firebaseui-auth-container"></div>
 <div style="margin:15px;margin-top:0px"><span class="x_copyright">
-Copyright © 2023 - I AM FUCKING ART - All rights reserved.<br>made with ❤ in Milano</span><br/>
+Copyright © 2024 - standalone.io - all rights reserved.<br>made with ❤ in Milano</span><br/>
 </div></div></div><div id="y" class="invisible" style="display:inline-block;"><div id="a"></div><span
-class="x_copyright2">copyright © 2023 - I AM FUCKING ART - all rights reserved <span class="honly">-</span><br class="vonly"/> made with ❤ in Milano</span></div><div id="info" class="invisible">
-<br/>IAMFUCKINGART.COM <br/><br/>
-#1 Choose your username, get your address :<br/><br/>
-<svg width="100" viewBox="0 0 218 14.0" id="link"><text x="0" y="10" style="font-size:12.00px;fill:#ffffff;fill-opacity:1;font-family:'Zilla Slab';">https://iamfuckingart.com/your-username</text></svg><br/>
-<br/>#2 Save your links in your iamfuckingart.com account.<br/><br/>
-#3 Visitors to your address will be redirected to a random link from your list.<br/><br/>
-More features might be added in the future.<br/>
+class="x_copyright2">copyright © 2024 - standalone.io - all rights reserved <span class="honly">-</span><br class="vonly"/> made with ❤ in Milano</span></div><div id="info" class="invisible">
+lol
 </div></body></html>

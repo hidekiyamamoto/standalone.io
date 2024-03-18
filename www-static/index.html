@@ -5,13 +5,13 @@
 <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore-compat.js"></script>
 <script>
 const firebaseConfig = {
-	apiKey: "AIzaSyB1Ihsvt8WVTpolvc6EM1s0Ej09RkBNv8M",
-	authDomain: "iamfuckingart.firebaseapp.com",
-	projectId: "iamfuckingart",
-	storageBucket: "iamfuckingart.appspot.com",
-	messagingSenderId: "207344014403",
-	appId: "1:207344014403:web:3268bcaaa1fdb46cecb0f6",
-	measurementId: "G-5R60E9Z4W4"
+	apiKey: "AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
+	authDomain: "standalone-io.firebaseapp.com",
+	projectId: "standalone-io",
+	storageBucket: "standalone-io.appspot.com",
+	messagingSenderId: "632415905019",
+	appId: "1:632415905019:web:b895dbd8bd6d1260b33c5e",
+	measurementId: "G-K1EJDR8DNH"
 };var app=firebase.initializeApp(firebaseConfig);
 window.r=async function(){let coll=false;let uri=false;let u=location.pathname.replace(/\//g,'');
 	if(u!=''){let unr=await(await firebase.firestore().collection('usernames').doc(u)).get();
