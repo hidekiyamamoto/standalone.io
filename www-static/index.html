@@ -37,11 +37,13 @@ var loadBG=function(){
 var loadBGK=function(Xmode){let zfactor=200;if(Xmode=='v'){zfactor=50}
 	var ks,kx,ky;
 	var images=[
-		'https://standalone.io/static/IAMFUCKINGART.webp','https://iamfuckingart.com/static/barresi.jpg',
+		//'https://standalone.io/static/IAMFUCKINGART.webp',
+		'https://iamfuckingart.com/static/barresi.jpg',
 		'https://standalone.io/static/k.webp','https://iamfuckingart.com/static/kk.webp',
 		'https://standalone.io/static/kkk.webp','https://iamfuckingart.com/static/kkkk.webp',
-		'https://standalone.io/static/kkkkk.webp','https://iamfuckingart.com/static/IAMFUCKINGART2.webp',
-		'https://standalone.io/static/IAMFUCKINGART.webp',
+		'https://standalone.io/static/kkkkk.webp',
+		//'https://iamfuckingart.com/static/IAMFUCKINGART2.webp',
+		//'https://standalone.io/static/IAMFUCKINGART.webp',
 		'https://standalone.io/static/j.webp'];
 	var rndImg=function(){return images[Math.floor(Math.random()*images.length)];};
 	var opts={imgURL:rndImg(),speed:0.001,segmentSize:Math.floor(Math.random()*150)+zfactor,smoothing:0.4};
