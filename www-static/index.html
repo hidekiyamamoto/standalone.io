@@ -184,7 +184,7 @@ var toggleHeader=function(signedin){let ifka=document.getElementById('ifka-heade
 	let y=document.getElementById('y');let h=document.getElementById('h');let sb=document.getElementById('signout');
 	let infB=document.getElementById('infoB');
 	if(signedin){sb.classList.remove('invisible');infB.classList.remove('invisible');
-		let a='standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - standalone.io - ';
+		let a='standaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneio';
 		if(Math.random()>0.82){a=a.split('');a=a.reverse();a=a.join('');}a=a.substr(Math.floor(Math.random()*3));
 		ifka.innerHTML=a;ifka.classList.add('logged');h.classList.add('invisible');y.classList.remove('invisible');
 	}else{ifka.innerHTML='standalone.io';ifka.classList.remove('logged');h.classList.remove('invisible');y.classList.add('invisible');sb.classList.add('invisible');infB.classList.add('invisible');}
