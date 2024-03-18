@@ -97,6 +97,7 @@ function checkIfSignedIn(url) {
       const sessionCookie = req.cookies.session || '';
       // User already logged in. Redirect to profile page.
       admin.auth().verifySessionCookie(sessionCookie).then(function(decodedClaims) {
+		
         res.redirect('/profile');
       }).catch(function(error) {
         next();
