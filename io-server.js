@@ -177,7 +177,9 @@ app.post('/sessionLogin', function (req, res) {
     res.status(401).send('UNAUTHORIZED REQUEST!');
   });
 });
-
+app.all('/gpt-test', function (req, res) {
+	res.end('{"hallo":"world"}');
+});
 /** User signout endpoint. */
 app.get('/logout', function (req, res) {
   // Clear cookie.
