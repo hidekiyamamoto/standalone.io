@@ -117,13 +117,13 @@ var loadBGK=function(Xmode){let zfactor=200;if(Xmode=='v'){zfactor=50}
 /*#######################################################################################################################################*/
 /*#######################################################################################################################################*/
 const firebaseConfig = {
-	apiKey: "AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
-	authDomain: "standalone-io.firebaseapp.com",
-	projectId: "standalone-io",
-	storageBucket: "standalone-io.appspot.com",
-	messagingSenderId: "632415905019",
-	appId: "1:632415905019:web:b895dbd8bd6d1260b33c5e",
-	measurementId: "G-K1EJDR8DNH"
+	apiKey:"AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
+	authDomain:"standalone-io.firebaseapp.com",
+	projectId:"standalone-io",
+	storageBucket:"standalone-io.appspot.com",
+	messagingSenderId:"632415905019",
+	appId:"1:632415905019:web:b895dbd8bd6d1260b33c5e",
+	measurementId:"G-K1EJDR8DNH"
 };var app=firebase.initializeApp(firebaseConfig);
 	//const analytics = getAnalytics(app);
 var uiConfig={//signInSuccessUrl: 'https://standalone.io',
@@ -186,7 +186,7 @@ var toggleHeader=function(signedin){let ifka=document.getElementById('ifka-heade
 	let y=document.getElementById('y');let h=document.getElementById('h');let sb=document.getElementById('signout');
 	let infB=document.getElementById('infoB');
 	if(signedin){sb.classList.remove('invisible');infB.classList.remove('invisible');
-		let a='standaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneio';
+		let a='standaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneiostandaloneio';
 		if(Math.random()>0.82){a=a.split('');a=a.reverse();a=a.join('');}a=a.substr(Math.floor(Math.random()*3));
 		ifka.innerHTML=a;ifka.classList.add('logged');h.classList.add('invisible');y.classList.remove('invisible');
 	}else{ifka.innerHTML='standalone.io';ifka.classList.remove('logged');h.classList.remove('invisible');y.classList.add('invisible');sb.classList.add('invisible');infB.classList.add('invisible');}
@@ -294,7 +294,7 @@ var showinfo=function(){let ssssss=document.getElementById('y').classList.contai
 .xmodev .x_copyright{font-size:2.5vw}
 .xmodev #ifka-header{top:0;left:0;width:100%;font-size:50px;line-height:normal;
     display:flex;align-items:flex-end;justify-content:space-evenly;}
-.xmodeh #ifka-header.logged{height:16vh;animation:crazy 50s infinite;}
+.xmodeh #ifka-header.logged{height:7vh;animation:crazy 50s infinite;}
 .xmodev #ifka-header.logged{font-size:70px;height:auto;animation:crazy 50s infinite;}
 .xmodev #a{margin-top:7vh;border-width:10px;width:calc(100% - 40px);padding-top:0;overflow-y:scroll;max-height:calc(100vh - 11vh - 60px)}
 .xmodev .upicker{height:auto;padding-bottom:5px}
