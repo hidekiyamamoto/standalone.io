@@ -124,7 +124,7 @@ app.use(attachCsrfToken('/', 'csrfToken', (Math.random()* 100000000000000000).to
 // If a user is signed in, redirect to profile page.
 app.use(checkIfSignedIn('/',));
 // Serve static content from public folder.
-app.use('/', express.static('public'));
+app.use('/', express.static('www-static'));
 
 /** Get profile endpoint. */
 app.get('/profile', function (req, res) {
