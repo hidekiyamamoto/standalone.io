@@ -11,14 +11,14 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/*
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
 const firebaseui = require('firebaseui');
 const config = require('./config.js');
 const $ = require('jquery');
-
+*/
 /**
  * @param {string} name The cookie name.
  * @return {?string} The corresponding cookie value to lookup.
