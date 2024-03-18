@@ -125,6 +125,7 @@ app.use(attachCsrfToken('/', 'csrfToken', (Math.random()* 100000000000000000).to
 app.use(checkIfSignedIn('/',));
 // Serve static content from public folder.
 
+app.use('/', express.static('www-static'));
 /** Get profile endpoint. */
 app.get('/profile', function (req, res) {
   // Get session cookie.
@@ -223,7 +224,6 @@ app.get('/delete', function (req, res) {
   }
 });
 
-app.use('/', express.static('www-static'));
 // Start http server and listen to port 3000.
 app.listen(3000, function () {
   console.log('Sample app listening on port 3000!')
