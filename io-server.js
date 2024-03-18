@@ -38,7 +38,7 @@ function serveContentForUser(endpoint, req, res, decodedClaims) {
       '<title>standalone.io</title>' +
       '<body>' +
       '<div id="container">' +
-      '  <h3>Welcome to Session Management Example App, '+( userRecord.displayName || 'N/A') +'</h3>' +
+      '  <h3>'+( userRecord.displayName || 'N/A') +'</h3>' +
       '  <div id="loaded">' +
       '    <div id="main">' +
       '      <div id="user-signed-in">' +
