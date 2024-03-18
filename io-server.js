@@ -109,7 +109,7 @@ function checkIfSignedIn(url) {
 
 // Initialize Admin SDK.
 admin.initializeApp({
-  credential: admin.credential.cert('serviceAccountKeys.json')
+  credential: admin.credential.cert('service-credentials.json')
 });
 // Support JSON-encoded bodies.
 app.use(bodyParser.json());
