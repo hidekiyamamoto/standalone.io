@@ -1,15 +1,15 @@
 //sources
 /*
-	/data/search
-		-query : text
-		-source: text [email-documents-phonecalls]
-		-group : text [email-keywords-topics]
-		->query:
-		->group:
-		->summarize:
-		->respond:
-		
-	/data/get
+        /data/search
+                -query : text
+                -source: text [email-documents-phonecalls]
+                -group : text [email-keywords-topics]
+                ->query:
+                ->group:
+                ->summarize:
+                ->respond:
+
+        /data/get
 */
 
 const fs = require('fs').promises;
