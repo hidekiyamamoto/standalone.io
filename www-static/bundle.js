@@ -27,7 +27,15 @@ function getCookie(name) {
   const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
   return v ? v[2] : null;
 }
-
+const config={
+	apiKey:"AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
+	authDomain:"standalone-io.firebaseapp.com",
+	projectId:"standalone-io",
+	storageBucket:"standalone-io.appspot.com",
+	messagingSenderId:"632415905019",
+	appId:"1:632415905019:web:b895dbd8bd6d1260b33c5e",
+	measurementId:"G-K1EJDR8DNH"
+};
 /**
  * @return {!Object} The FirebaseUI config.
  */
