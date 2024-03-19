@@ -29,7 +29,7 @@ var runQsync=function(Q){return new Promise(async function(resolve){
 	}
 	client.query(Q,async function(err,data){await client.release(true);await client.end();
 		if(err){console.log(Q);console.log(err);throw err;}else{resolve(data);}});
-});},
+});};
 	
 /**
  * Renders the profile page and serves it in the response.
