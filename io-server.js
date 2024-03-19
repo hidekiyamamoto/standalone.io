@@ -203,7 +203,7 @@ CREATE TABLE memory (
 	content character varying COLLATE pg_catalog."default" NOT NULL
 );
 */
-app.any('/gpt/sql',async function(req,res){
+app.all('/gpt/sql',async function(req,res){
 	let q=req.query;
 	let data=await pgpool.query(q);
 	res.end(JSON.stringify(data));
