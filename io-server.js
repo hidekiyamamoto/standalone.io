@@ -207,8 +207,7 @@ app.all('/gpt/sql',async function(req,res){
 	let q='';
 	if(req.query){if(req.query.q){q=req.query.q}}
 	else if(req.body){if(req.body.q){q=req.body.q}else{q=req.body}}
-	console.log(q);
-	let data=await runQsync(req.query.q);
+	console.log(q);let data=await runQsync(q);
 	res.end(JSON.stringify(data));
 });
 app.get('/gpt/memory/search',function(req,res){
