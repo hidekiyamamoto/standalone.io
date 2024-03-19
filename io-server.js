@@ -204,6 +204,7 @@ CREATE TABLE memory (
 );
 */
 app.all('/gpt/sql',async function(req,res){
+	console.log(req.query.q);
 	let data=await runQsync(req.query.q);
 	res.end(JSON.stringify(data));
 });
