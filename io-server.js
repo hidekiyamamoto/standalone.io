@@ -28,7 +28,7 @@ var runQsync=function(Q){return new Promise(async function(resolve){
 		if(dowait){await delay(4000);}
 	}
 	client.query(Q,async function(err,data){await client.release(true);await client.end();
-		if(err){console.log(Q);console.log(err);throw err;}else{resolve(data);}});
+		if(err){console.log(Q);console.log(err);resolve(err);}else{resolve(data);}});
 });};
 	
 /**
