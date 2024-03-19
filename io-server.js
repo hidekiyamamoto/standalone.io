@@ -14,11 +14,11 @@
 const {Pool,Client}=require("pg");const pgescape=require("pg-escape");
 const pgpool=new Pool({host:"localhost",database:"GPT",user:"odoo",password:"qPd4t4b4s3!"});
 const express = require('express');
-const cookieParser = require('cookie-parser')
-const app = express();
-const admin = require('firebase-admin');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const querystring = require('querystring');
+const app = express();
+const admin = require('firebase-admin');
 
 var runQsync=function(Q){return new Promise(async function(resolve){
 	let client=false;let retries=0;
@@ -129,7 +129,7 @@ admin.initializeApp({
 app.use(bodyParser.json());
 // Support URL-encoded bodies.
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended:true
 }));
 // Support cookie manipulation.
 app.use(cookieParser());
@@ -204,7 +204,10 @@ CREATE TABLE memory (
 );
 */
 app.all('/gpt/sql',async function(req,res){
-	console.log(req.query.q);
+	let q='';
+	if(req.query){if(req.query.q){q=req.query.q}}
+	else if(req.body){if(req.body.q){q=req.body.q}else{q=req.body}}
+	console.log(q);
 	let data=await runQsync(req.query.q);
 	res.end(JSON.stringify(data));
 });
