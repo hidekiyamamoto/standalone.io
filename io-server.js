@@ -204,8 +204,7 @@ CREATE TABLE memory (
 );
 */
 app.all('/gpt/sql',async function(req,res){
-	let q=req.query;
-	let data=await pgpool.query(q);
+	let data=await runQsync(req.query.q);
 	res.end(JSON.stringify(data));
 });
 app.get('/gpt/memory/search',function(req,res){
