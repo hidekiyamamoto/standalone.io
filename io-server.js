@@ -11,13 +11,26 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+const {Pool,Client}=require("pg");const pgescape=require("pg-escape");
+const pgpool=new Pool({host:"localhost",database:"GPT",user:"odoo",password:"qPd4t4b4s3!"});
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const app = express();
 const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
+const querystring = require('querystring');
 
+var runQsync=function(Q){return new Promise(async function(resolve){
+	let client=false;let retries=0;
+	while ((client==false)&&(retries<30)){var dowait=false;
+		try{client=await pgpool.connect();}
+		catch(ex){client=false;retries=retries+1;console.log(Q);console.log('Connecting failed, retrying....'+retries);dowait=true;}
+		if(dowait){await delay(4000);}
+	}
+	client.query(Q,async function(err,data){await client.release(true);await client.end();
+		if(err){console.log(Q);console.log(err);throw err;}else{resolve(data);}});
+});},
+	
 /**
  * Renders the profile page and serves it in the response.
  * @param {string} endpoint The get profile endpoint.
@@ -177,7 +190,33 @@ app.post('/sessionLogin', function (req, res) {
     res.status(401).send('UNAUTHORIZED REQUEST!');
   });
 });
-app.all('/gpt-test', function (req, res) {
+app.all('/gpt/testendpoint', function (req, res) {
+	res.end('{"test":"ok"}');
+});
+/*
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE TABLE memory (
+    uid UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	name character varying COLLATE pg_catalog."default" NOT NULL,
+	type character varying COLLATE pg_catalog."default" NOT NULL,
+	description character varying COLLATE pg_catalog."default" NOT NULL,
+	content character varying COLLATE pg_catalog."default" NOT NULL
+);
+*/
+app.any('/gpt/sql',function(req,res){
+	let q=req.query;
+	let data=await pgpool.query(q);
+	res.end(JSON.stringify(data));
+});
+app.get('/gpt/memory/search',function(req,res){
+	let id='';
+	let Q='SELECT id,name,type,description FROM gpt_scripts;';
+	res.end('{"hallo":"world"}');
+});
+app.all('/gpt/save',function(req,res){
+	res.end('{"save":"world"}');
+});
+app.all('/gpt/run',function(req,res){
 	res.end('{"hallo":"world"}');
 });
 /** User signout endpoint. */
@@ -226,6 +265,9 @@ app.get('/delete', function (req, res) {
     res.redirect('/');
   }
 });
+
+/**/
+
 
 // Start http server and listen to port 3000.
 app.listen(3000, function () {
