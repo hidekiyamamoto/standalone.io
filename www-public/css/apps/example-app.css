@@ -1,0 +1,49 @@
+.example-app-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #f5f7ff;
+}
+
+.example-menu {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(3, 6, 26, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.example-menu-item {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: #cfd5ff;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.example-menu-item.is-active {
+  background: rgba(77, 163, 255, 0.2);
+  color: #ffffff;
+}
+
+.example-tabs {
+  flex: 1;
+  min-height: 0;
+}
+
+.example-tab-panel {
+  display: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), rgba(4, 7, 30, 0.98));
+  font-size: 13px;
+}
+
+.example-tab-panel.is-active {
+  display: block;
+}

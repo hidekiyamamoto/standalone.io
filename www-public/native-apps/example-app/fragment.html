@@ -1,14 +1,30 @@
-<div class="native-app">
-  <header class="native-app-header">
-    <div class="native-app-header-meta">
-      <h1 class="native-app-title">Hello app</h1>
-      <p class="native-app-subtitle">Minimal native app using the shared layout.</p>
+<div class="native-app example-app">
+  <section class="native-app-body example-app-body">
+    <nav class="example-menu" aria-label="Example app menu">
+      <button class="example-menu-item is-active" data-example-tab="tab1">TAB1</button>
+      <button class="example-menu-item" data-example-tab="tab2">TAB2</button>
+    </nav>
+
+    <div class="example-tabs">
+      <div class="example-tab-panel is-active" data-example-panel="tab1">
+        <p>
+          Tab 1 ipsum: floating pixels, lazy event loops, and tiny packets of joy drifting through the Web OS ether.
+        </p>
+        <p>
+          Click, tap, or poke around — this sandbox tab is here just to prove that panes, menus, and tabs can all play nicely together.
+        </p>
+      </div>
+      <div class="example-tab-panel" data-example-panel="tab2">
+        <p>
+          Tab 2 ipsum: neon gradients, optimistic kernels, and async dreams running at 60 frames per second.
+        </p>
+        <p>
+          Swap tabs, resize the window, and imagine this space filled with your real tools instead of cheerful nonsense.
+        </p>
+      </div>
     </div>
-  </header>
-  <section class="native-app-body">
-    <p>This is a native example app fragment rendered inside the standalone.io Web OS window.</p>
-    <p>You can use this area to experiment with controls, text, or any other native feature while keeping the same layout as other apps.</p>
   </section>
 </div>
 <link rel="stylesheet" href="/css/apps/native-app.css" />
-
+<link rel="stylesheet" href="/css/apps/example-app.css?v=2" />
+<script src="/js/apps/example-app/app.js"></script>
