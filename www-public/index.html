@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>standalone.io – Web OS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="description" content="standalone.io – a web-native operating system shell for apps and agents." />
+  <meta name="theme-color" content="#050611" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="standalone.io" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" sizes="192x192" href="/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+  <!-- Window manager (desktop / tablet) -->
+  <link rel="stylesheet" href="https://unpkg.com/winbox@0.2.82/dist/css/winbox.min.css" />
+  <!-- OS shell styles -->
+  <link rel="stylesheet" href="/css/os-shell.css" />
+</head>
+<body>
+  <div class="os-root">
+    <main class="os-desktop">
+      <section class="os-desktop-row os-desktop-row--primary">
+        <aside class="os-pane os-pane--sidebar">
+          <nav class="os-workspace-strip">
+            <button class="os-workspace-dot is-active" data-workspace-id="default" title="Default workspace"></button>
+            <button class="os-workspace-dot" data-workspace-id="research" title="Research workspace"></button>
+            <button class="os-workspace-dot" data-workspace-id="coding" title="Coding workspace"></button>
+            <button class="os-workspace-dot" data-workspace-id="playground" title="Playground workspace"></button>
+          </nav>
+        </aside>
+
+        <section class="os-pane os-pane--workspace">
+          <div class="os-window">
+            <div class="os-window-titlebar">
+              <div class="os-window-dots">
+                <span class="os-window-dot"></span>
+                <span class="os-window-dot"></span>
+                <span class="os-window-dot"></span>
+              </div>
+              <div class="os-window-title">Workspace</div>
+            </div>
+            <div class="os-window-body">
+              <p class="os-window-placeholder">
+                Select an app from the launcher or dock to open it in this workspace.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="os-pane os-pane--launcher">
+          <h2 class="os-section-title">Launcher</h2>
+          <h3 class="os-section-heading">Apps</h3>
+          <div class="os-app-grid-inner">
+            <button class="os-tile" data-app-id="storage">
+              <span class="os-tile-icon">📁</span>
+              <span class="os-tile-title">Storage</span>
+              <span class="os-tile-sub">Explore browser storage</span>
+            </button>
+            <button class="os-tile" data-app-id="example-app">
+              <span class="os-tile-icon">💠</span>
+              <span class="os-tile-title">Hello app</span>
+              <span class="os-tile-sub">Example native fragment</span>
+            </button>
+            <button class="os-tile">
+              <span class="os-tile-icon">💬</span>
+              <span class="os-tile-title">Chat</span>
+              <span class="os-tile-sub">Conversations & agents</span>
+            </button>
+            <button class="os-tile">
+              <span class="os-tile-icon">🧠</span>
+              <span class="os-tile-title">Memory</span>
+              <span class="os-tile-sub">Personal context</span>
+            </button>
+            <button class="os-tile" data-app-id="settings">
+              <span class="os-tile-icon">⚙️</span>
+              <span class="os-tile-title">Settings</span>
+              <span class="os-tile-sub">System preferences</span>
+            </button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="https://unpkg.com/winbox@0.2.82/dist/js/winbox.min.js"></script>
+  <script src="/js/os-core.js"></script>
+  <script src="/js/os-shell.js"></script>
+</body>
+</html>

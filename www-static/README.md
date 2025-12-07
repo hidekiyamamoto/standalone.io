@@ -1,2 +1,0 @@
-# iamfuckingart
-iamfuckingart.com

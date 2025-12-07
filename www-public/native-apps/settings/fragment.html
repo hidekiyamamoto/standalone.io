@@ -1,0 +1,339 @@
+<div class="native-app settings-app">
+  <section class="native-app-body">
+    <div class="settings-tabs">
+      <button class="settings-tab is-active" data-settings-tab="ui">UI settings</button>
+      <button class="settings-tab" data-settings-tab="theme">Theme</button>
+    </div>
+
+    <div class="settings-tab-panel is-active" data-settings-panel="ui">
+      <div class="settings-section">
+        <h2 class="settings-section-title">Layout</h2>
+        <div class="settings-row">
+          <div class="settings-row-label">
+            Use windowed mode on desktop
+          </div>
+          <div class="settings-row-control">
+            <label class="settings-toggle">
+              <input type="checkbox" id="settings-use-winbox" />
+              <span>Enable WinBox windows</span>
+            </label>
+          </div>
+        </div>
+        <p class="settings-note">
+          When disabled, apps open inline in the central workspace instead of floating windows.
+        </p>
+      </div>
+
+      <div class="settings-section">
+        <h2 class="settings-section-title">Appearance</h2>
+        <div class="settings-row">
+          <div class="settings-row-label">
+            Desktop density
+          </div>
+          <div class="settings-row-control">
+            <select class="settings-select" id="settings-density">
+              <option value="comfortable">Comfortable</option>
+              <option value="compact">Compact</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-tab-panel" data-settings-panel="theme" style="display:none;">
+      <div class="settings-section">
+        <h2 class="settings-section-title">Style tokens</h2>
+        <div id="settings-style-list"></div>
+        <p class="settings-note">
+          Theme values are stored as JSON in local storage and can be shared across devices and users.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<link rel="stylesheet" href="/css/apps/native-app.css" />
+<link rel="stylesheet" href="/css/apps/settings.css?v=2" />
+<script src="/js/apps/settings/app.js?v=4"></script>
+<script>
+  (function () {
+    console.log('[settings-style] inline bootstrap start');
+    function safeGetKernel() {
+      try {
+        if (window.parent && window.parent !== window && window.parent.STANDALONE_OS) {
+          return window.parent.STANDALONE_OS;
+        }
+      } catch (err) {
+        console.warn('[settings-style] cannot access parent OS', err);
+      }
+      if (window.STANDALONE_OS) return window.STANDALONE_OS;
+      console.warn('[settings-style] no OS kernel found; style controls will be local-only');
+      return null;
+    }
+
+    const OS = safeGetKernel();
+
+    function createThemeStore() {
+      if (!OS || !OS.context || !OS.context.storage || !OS.context.storage.createStore) {
+        console.warn('[settings-style] no shared store; using localStorage fallback for theme');
+        const key = 'standalone.io:theme';
+        return {
+          get() {
+            try {
+              const raw = window.localStorage && window.localStorage.getItem(key);
+              return raw ? JSON.parse(raw) : null;
+            } catch (err) {
+              console.warn('[settings-style] localStorage.getItem failed', err);
+              return null;
+            }
+          },
+          set(value) {
+            try {
+              if (window.localStorage) {
+                window.localStorage.setItem(key, JSON.stringify(value ?? null));
+              }
+            } catch (err) {
+              console.warn('[settings-style] localStorage.setItem failed', err);
+            }
+          },
+        };
+      }
+      console.log('[settings-style] using OS.context.storage theme store');
+      return OS.context.storage.createStore('theme', 'local');
+    }
+
+    const styleFields = [
+      // Typography
+      {
+        group: 'Typography',
+        key: '--os-font-size',
+        label: 'Base font size',
+        type: 'number',
+        unit: 'px',
+        defaultValue: 16,
+        slider: { min: 10, max: 24, step: 1 },
+      },
+
+      // Shell layout
+      {
+        group: 'Shell layout',
+        key: '--os-shell-padding',
+        label: 'Shell padding',
+        type: 'number',
+        unit: 'px',
+        defaultValue: 12,
+        slider: { min: 0, max: 40, step: 1 },
+      },
+      {
+        group: 'Shell layout',
+        key: '--os-shell-gap',
+        label: 'Shell gap',
+        type: 'number',
+        unit: 'px',
+        defaultValue: 12,
+        slider: { min: 0, max: 40, step: 1 },
+      },
+
+      // Colors
+      { group: 'Colors', key: '--os-bg', label: 'Background', type: 'color', defaultValue: '#050611' },
+      {
+        group: 'Colors',
+        key: '--os-bg-alt',
+        label: 'Background (alt)',
+        type: 'color',
+        defaultValue: '#0b0d1c',
+      },
+      { group: 'Colors', key: '--os-accent', label: 'Accent', type: 'color', defaultValue: '#4da3ff' },
+      {
+        group: 'Colors',
+        key: '--os-text',
+        label: 'Text',
+        type: 'color',
+        defaultValue: '#f5f7ff',
+      },
+      {
+        group: 'Colors',
+        key: '--os-text-muted',
+        label: 'Text (muted)',
+        type: 'color',
+        defaultValue: '#9ba0b8',
+      },
+
+      // Corner radius
+      {
+        group: 'Corners',
+        key: '--os-radius-lg',
+        label: 'Large radius',
+        type: 'number',
+        unit: 'px',
+        defaultValue: 18,
+        slider: { min: 0, max: 40, step: 1 },
+      },
+      {
+        group: 'Corners',
+        key: '--os-radius-md',
+        label: 'Medium radius',
+        type: 'number',
+        unit: 'px',
+        defaultValue: 12,
+        slider: { min: 0, max: 32, step: 1 },
+      },
+    ];
+
+    function applyCssVar(field, storedValue) {
+      if (!field || !field.key) return;
+      const key = field.key;
+      if (key.indexOf('--') !== 0) return;
+      let cssValue = storedValue;
+      if (field.type === 'number' && field.unit === 'px') {
+        const num = typeof storedValue === 'number' ? storedValue : Number(storedValue);
+        if (!Number.isNaN(num)) cssValue = num + 'px';
+      }
+
+      try {
+        const parentDoc = window.parent && window.parent.document;
+        if (parentDoc && parentDoc.documentElement) {
+          parentDoc.documentElement.style.setProperty(key, String(cssValue));
+          return;
+        }
+      } catch (err) {
+        console.warn('[settings-style] failed to set parent CSS var', key, err);
+      }
+
+      if (document.documentElement) {
+        document.documentElement.style.setProperty(key, String(cssValue));
+      }
+    }
+
+    function init() {
+      console.log('[settings-style] init start');
+      const container = document.getElementById('settings-style-list');
+      if (!container) {
+        console.warn('[settings-style] #settings-style-list not found');
+        return;
+      }
+
+      const store = createThemeStore();
+      const raw = (store && store.get && store.get()) || {};
+      const style = (raw && typeof raw === 'object') ? raw : {};
+
+      // Ensure defaults exist.
+      styleFields.forEach(function (field) {
+        if (!Object.prototype.hasOwnProperty.call(style, field.key)) {
+          style[field.key] = field.defaultValue;
+        }
+      });
+
+      // Apply current style to document.
+      styleFields.forEach(function (field) {
+        applyCssVar(field, style[field.key]);
+      });
+
+      container.innerHTML = '';
+      let currentGroup = null;
+
+      styleFields.forEach(function (field) {
+        const group = field.group || 'Style';
+        if (group !== currentGroup) {
+          currentGroup = group;
+          const heading = document.createElement('div');
+          heading.className = 'settings-style-group-title';
+          heading.textContent = group;
+          container.appendChild(heading);
+        }
+
+        const row = document.createElement('div');
+        row.className = 'settings-row settings-row--stacked';
+
+        const label = document.createElement('div');
+        label.className = 'settings-row-label';
+        label.textContent = field.label;
+
+        const controlWrapper = document.createElement('div');
+        controlWrapper.className = 'settings-row-control';
+
+        const baseValue = style[field.key];
+        const numericValue =
+          field.type === 'number'
+            ? typeof baseValue === 'number'
+              ? baseValue
+              : Number(baseValue) || 0
+            : null;
+
+        const primaryInput = document.createElement('input');
+        primaryInput.className = 'settings-input';
+        primaryInput.type =
+          field.type === 'color' || field.type === 'number' || field.type === 'text'
+            ? field.type
+            : 'text';
+
+        if (field.type === 'number') {
+          primaryInput.step = (field.slider && String(field.slider.step)) || '1';
+          primaryInput.value = String(numericValue != null ? numericValue : 0);
+        } else {
+          primaryInput.value = baseValue != null ? String(baseValue) : '';
+        }
+
+        let rangeInput = null;
+        if (field.type === 'number' && field.slider) {
+          rangeInput = document.createElement('input');
+          rangeInput.className = 'settings-input';
+          rangeInput.type = 'range';
+          rangeInput.min = String(field.slider.min);
+          rangeInput.max = String(field.slider.max);
+          rangeInput.step = String(field.slider.step);
+          rangeInput.value = String(numericValue != null ? numericValue : field.slider.min);
+
+          rangeInput.addEventListener('input', function () {
+            primaryInput.value = rangeInput.value;
+          });
+        }
+
+        function commit(rawValue) {
+          style[field.key] = field.type === 'number' ? Number(rawValue) : rawValue;
+          applyCssVar(field, style[field.key]);
+          if (store && store.set) store.set(style);
+          if (OS) {
+            OS.config = OS.config || {};
+            OS.config.theme = style;
+          }
+          console.log('[settings-style] updated', field.key, style[field.key]);
+        }
+
+        primaryInput.addEventListener('change', function () {
+          const rawValue = primaryInput.value;
+          if (rangeInput) {
+            rangeInput.value = rawValue;
+          }
+          commit(rawValue);
+        });
+
+        if (field.type === 'color') {
+          primaryInput.addEventListener('input', function () {
+            commit(primaryInput.value);
+          });
+        }
+
+        const meta = document.createElement('div');
+        meta.className = 'settings-style-meta';
+        meta.textContent = field.key;
+
+        controlWrapper.appendChild(primaryInput);
+        if (rangeInput) controlWrapper.appendChild(rangeInput);
+
+        row.appendChild(label);
+        row.appendChild(controlWrapper);
+        row.appendChild(meta);
+        container.appendChild(row);
+      });
+
+      console.log('[settings-style] rendered controls:', styleFields.length);
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      init();
+    } else {
+      document.addEventListener('DOMContentLoaded', init);
+    }
+  })();
+</script>

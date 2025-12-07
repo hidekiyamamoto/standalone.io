@@ -1,0 +1,9 @@
+{
+  "name": "Settings",
+  "id": "settings",
+  "version": "0.1.0",
+  "author": "standalone.io",
+  "icon": "⚙️",
+  "entryFragment": "/native-apps/settings/fragment.html"
+}
+

@@ -1,0 +1,72 @@
+standalone.io – Web OS (high‑level vision)
+==========================================
+
+1. Core idea
+------------
+- Turn the browser into a lightweight operating system for web apps, agents, and tools.
+- Treat everything as an “app” that can be described, mounted, and composed, regardless of whether it is native (localStorage, cookies, IndexedDB…) or remote (APIs, services).
+- Keep the kernel tiny and understandable by one human: simple JS, explicit namespaces, no heavy frameworks.
+
+
+2. Kernel vs. surface
+---------------------
+- Kernel: a small set of stable modules:
+  - `os-core.js` – global namespace, app registry, manifest + fragment loading.
+  - `os-shell.js` – desktop shell behavior (launchers, windows, default apps), plus PWA/plumbing.
+  - `context/*` – description of the “world” (storage, memory, future capabilities) in plain JSON/TXT that both humans and agents can read.
+- Surface: everything else (layouts, native apps, themes) is replaceable. The user should be able to redesign the desktop without touching the kernel.
+
+
+3. Layout philosophy
+--------------------
+- Use flexbox everywhere, no hidden magic: each layout is a clear arrangement of panes (sidebar, workspace, launcher…).
+- Desktop / tablet / mobile may have separate fragments or entrypoints, but they all rely on the same kernel and app model.
+- Layouts should be driven by variables (CSS custom properties) so a configurator can change “how it feels” without rewriting markup.
+- Long term: per‑user and per‑folder layout profiles (e.g., different flex directions, pane weights, and app grids depending on the current “space”).
+
+
+4. Native apps and storage
+--------------------------
+- Native apps live under `native-apps/<id>/` with:
+  - `app.json` – manifest (name, version, icon, entry fragment, later permissions).
+  - `fragment.html` – markup that uses a shared native‑app layout shell.
+- Storage is a first‑class concept:
+  - We acknowledge browser layers: memory → sessionStorage → localStorage → IndexedDB → CacheStorage.
+  - `context/storage.json` documents these layers so apps and agents share the same vocabulary.
+  - The Storage app is not just a dev tool clone: it is the “file explorer” of this world, showing native stores and, eventually, a virtual filesystem.
+- Long term: a virtual `storage/` tree that maps paths to underlying native layers (e.g., `storage/apps/<id>/state.json`), so everything “feels” like files even when backed by different primitives.
+
+
+5. Agents and configurators
+---------------------------
+- The OS should be explorable and modifiable by code:
+  - Context files (`context/*.json` / `.txt`) act as contracts that agents can read and write.
+  - Layout and theme variables should be adjustable via a future “OS configurator” and/or agents, not only by editing CSS by hand.
+- Long term: agents can:
+  - Install / configure native apps by editing manifests.
+  - Adjust workspaces (add panes, pin apps, arrange windows) based on user goals.
+  - Use the Storage / virtual filesystem as their long‑term memory on this device.
+
+
+6. Design constraints
+---------------------
+- High neatness: small, clear functions; minimal global state; no auto‑generated complexity.
+- Prefer explicitness over magic: manifests and context files should explain themselves.
+- Everything should degrade gracefully:
+  - If the window manager isn’t available, apps still mount inline.
+  - If a storage layer isn’t supported, the UI explains why instead of breaking.
+- Keep the door open for:
+  - Multi‑window / multi‑workspace desktops.
+  - Remote storage backends that mirror the local `storage/` tree.
+  - User‑defined apps built entirely from manifests + fragments + context, without touching the kernel.
+
+
+7. What “done” might look like
+------------------------------
+- A person opens `standalone.io` and sees a desktop that feels coherent across devices.
+- They can:
+  - Launch apps (chat, storage, memory, custom tools) as windows.
+  - Browse and understand their local/virtual storage like a filesystem.
+  - Change the way their desktop looks and behaves via a configurator, not code.
+- Underneath, the kernel remains small and readable, and the “rules of the world” live in `context/`, so future you (or an agent) can extend the system without losing its shape.
+

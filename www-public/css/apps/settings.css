@@ -1,0 +1,122 @@
+.settings-section {
+  margin-bottom: 16px;
+}
+
+.settings-section-title {
+  margin: 0 0 4px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.settings-row-label {
+  flex: 1;
+}
+
+.settings-row-control {
+  flex: 0 0 auto;
+}
+
+.settings-row--stacked {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.settings-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.settings-tab {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(4, 7, 30, 0.8);
+  color: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.settings-tab.is-active {
+  background: rgba(77, 163, 255, 0.2);
+  border-color: rgba(77, 163, 255, 0.8);
+}
+
+.settings-tab-panel {
+  display: none;
+}
+
+.settings-tab-panel.is-active {
+  display: block;
+}
+
+.settings-style-group-title {
+  margin: 10px 0 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.75;
+}
+
+.settings-note {
+  margin: 4px 0 0;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.settings-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.settings-toggle input {
+  accent-color: #4da3ff;
+}
+
+.settings-select {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(4, 7, 30, 0.95);
+  color: inherit;
+  font-size: 12px;
+}
+
+.settings-input {
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(4, 7, 30, 0.95);
+  color: inherit;
+  font-size: 12px;
+}
+
+.settings-input[type='color'] {
+  padding: 0;
+  width: 32px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.settings-input[type='range'] {
+  width: 150px;
+}
+
+.settings-style-meta {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 2px;
+}

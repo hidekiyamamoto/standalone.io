@@ -1,2 +1,0 @@
-# standalone.io
-standalone.io

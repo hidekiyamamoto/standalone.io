@@ -1,0 +1,17 @@
+{
+  "name": "standalone.io Web OS",
+  "short_name": "standalone.io",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050611",
+  "theme_color": "#050611",
+  "description": "A web-native operating system shell for apps and agents.",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

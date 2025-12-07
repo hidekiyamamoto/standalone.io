@@ -1,0 +1,151 @@
+.storage-sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0;
+}
+
+.storage-sidebar-header {
+  margin-bottom: 10px;
+}
+
+.storage-sidebar-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.storage-sidebar-subtitle {
+  display: block;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.storage-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.storage-tree-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.storage-tree-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+.storage-tree-item {
+  border: none;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease-out, color 0.15s ease-out;
+}
+
+.storage-tree-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.storage-tree-item.is-active {
+  background: rgba(77, 163, 255, 0.24);
+}
+
+.storage-main {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.storage-main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.storage-main-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.storage-main-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.storage-main-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.storage-action-button {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(4, 7, 30, 0.95);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.storage-action-button:hover {
+  background: rgba(77, 163, 255, 0.28);
+}
+
+.storage-main-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.05), rgba(5, 6, 20, 0.98));
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.storage-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.storage-table th,
+.storage-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
+  vertical-align: top;
+}
+
+.storage-table thead {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.storage-table tbody tr:hover {
+  background: rgba(77, 163, 255, 0.12);
+}
+
+.storage-empty {
+  padding: 10px 4px;
+  opacity: 0.7;
+}
+
+.storage-key {
+  font-weight: 500;
+}
+
+.storage-vfs-path {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 11px;
+}
