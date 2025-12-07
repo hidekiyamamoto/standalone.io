@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html><title>OOO - loading...</title>
+<head><script src="ooox.js"></script>
+<script>ePS=function(elm){return elm.previousSibling};eNS=function(elm){return elm.nextSibling};
+    appstart=function(){
+    	var t=ooo.querystring('t',location.href);
+	if(ooo.inoe(t)){window.close()}
+	else{ooo.render('maintarget','sample.xml','samples/'+t+'.xml');}};
+</script>
+<style>body{color:#55D;padding-top:2%}
+		a{text-decoration:none;}a:visited{color:inherit;}
+		/*input[type=button]{border:none;background-color:transparent;}*/
+		code{display:block;color:#222;}
+		.info{color:black;font:monospace;}
+		.ichild{margin-left:20px;}
+		div.-singlehide{display:none;}
+		code.-multihide,a.-multihide{display:none;}
+	</style>
+	<style>html,body{height:98%;}#maintarget{height:49%;}textarea{height:100%;}</style>
+</head><body onload="appstart()"><div id="maintarget">loading...</div></body></html>

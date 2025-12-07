@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sample>
+<templatexml w="69%">
+  <document>
+ <constantjavascript substitution="vdgd">byte=function(v){return Math.floor(v*256);}</constantjavascript>
+ <constantjavascript substitution="gcsv">sbyte=function(v){return Math.floor(v*256)-127;}</constantjavascript>
+ <constantjavascript substitution="ghgh">sign=function(v){return v-0.5}</constantjavascript>
+ <constantjavascript substitution="vdgr">n1000=function(v){return Math.floor(v*500);}</constantjavascript>
+ <constantjavascript substitution="vdgtr">n500=function(v){return Math.floor(v*1000);}</constantjavascript>
+ <constantjavascript substitution="vdgtr">n100=function(v){return Math.floor(v*100);}</constantjavascript>
+<rowtype tagname="//n" max="200">
+ <variable tagname="@k0" substitution="%x" convert="n1000" />
+ <variable tagname="./following-sibling::n/@k0" substitution="%y"  convert="n500" />
+ <variable tagname="./following-sibling::n/@k0" substitution="%z"  convert="n100" />
+ <variable tagname="@k0" substitution="%bx" convert="byte" />
+ <variable tagname="./following-sibling::n/@k0" substitution="%by" convert="byte" />
+ <variable tagname="./following-sibling::n/following-sibling::n/@k0" substitution="%bz" convert="byte" />
+ <html><div style="position:absolute;top:%xpx;left:%ypx;width:%zpx;height:%zpx;background-color:rgb(%by,%bx,%bz);" > </div>
+ </html>
+</rowtype>
+</document></templatexml>
+<dataxml w="29%"> </dataxml>
+<userandomdata num="1" />
+</sample>

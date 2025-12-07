@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sample>
+<templatexml w="69%">
+<document>
+<!--We start writing the start of the supported child node, if the child element is optional it will be colored in green-->
+<rowtype tagname="child"><variable tagname="@name" substitution="%name" /><variable tagname="@o" substitution="%xo"/>
+  <switch  value="%xo" substitution="%optstart">
+    <match value="o"><span style="color:#5D5">&amp;lt;%name</span></match>
+    <match value="anything" default="true">&amp;lt;%name</match>
+  </switch><html><div style="width:1px;height:1px">&amp;nbsp;</div>%optstart</html></rowtype>
+<!--We now want to write the possible attribute list for the supported child node-->
+<!--Instead of selecting all the attributes, we first select the NON OPTIONAL and then the optional ones, this will make the optional ones appear after-->
+<rowtype tagname="child/a[not(@o='o')]|child/a[@o='o']"><variable tagname="@n" substitution="%n"/><variable tagname="@o" substitution="%xo"/>
+  <switch value="%xo" substitution="%optstart"><match value="anything" default="true" /><match value="o"><![CDATA[<span style="color:#D55">]]></match></switch>
+  <switch value="%xo" substitution="%optend"><match value="anything" default="true" /><match value="o"><![CDATA[</span>]]></match></switch>
+  <switch  value="%n" substitution="%ft"><match value="anything" default="true">%t</match>
+<!--Attributes are known - full line is generated basing on the name.-->
+<match value="xpath"><a href="#" onclick="return false" title="an xpath expression">expression</a></match>
+<match value="max"><a href="#" onclick="return false" title="the maximum number of matched rows to process">num</a></match>
+<match value="value"><a href="#" onclick="return false" title="some value to be matched against">num</a></match>
+<match value="varname"><a href="#" onclick="return false" title="the query string var name or cookie name">string</a></match>
+<match value="default"><a href="#" onclick="return false" title="a specific match can be used if no other value matches">true</a></match>
+<match value="target"><a href="#" onclick="return false" title="reference to an element intance or element id">elm</a></match>
+<match value="ntturl"><a href="#" onclick="return false" title="the url of an xml template">url</a></match>
+<match value="dataurl"><a href="#" onclick="return false" title="the url of some xml data">url</a></match>
+<match value="preload"><a href="#" onclick="return false" title="the url of some xml template to be used inline">url</a></match>
+<match value="mode"><a href="#" onclick="return false" title="normal|inline|append">url</a></match>
+<match value="escape"><a href="#" onclick="return false" title="js|id|url (see additional notes for infos)">escapemode</a></match>
+<match value="pickup"><a href="#" onclick="return false" title="normal|csv|date  (see additional notes for infos)">pickupmode</a></match>
+<match value="convert"><a href="#" onclick="return false" title="...(see additional notes for infos)">convertmode</a></match>
+<match value="substitution"><a href="#" onclick="return false" title="uniquely prefixed string tokens">utoken</a></match>
+  </switch><html> %optstart<a>%n="%ft"</a>%optend</html><casezero /></rowtype>
+<!--We now want to "close" the element declaration : -->
+<!-- If this element supports childs the "..." button will be displayed -->
+<!-- Else If the supports xml content  the "xmlcontent" text will be visible -->
+<!-- Else the element will be close "the xml way" (" />") -->
+<rowtype tagname="child">
+  <variable tagname="@name" substitution="%name" /><variable tagname="@o" substitution="%xo"/><variable tagname="@x" substitution="%xxxx"/>
+  <variable tagname="desc" substitution="%desc"/><variable tagname="@ex" substitution="%example"/>
+  <switch value="%xo" substitution="%optstart"><match value="anything" default="true"><![CDATA[<span>]]></match><match value="o"><![CDATA[<span style="color:#5D5">]]></match></switch>
+  <switch value="%xo" substitution="%optend"><match value="o" default="true"><![CDATA[</span>]]></match></switch>
+  <switch value="%xxxx" substitution="%fxxxx">
+<match value="anything" default="true">%optstart/&amp;gt;%optend<a href="sample.htm?t=%example" target="_blank" class="demolink">sample</a><code style="margin-left:10px">%desc</code></match>
+<match value="x">%optstart&amp;gt;%optendxmlcontent%optstart&amp;lt;/%name&amp;gt;%optend<a href="sample.htm?t=%example" target="_blank" class="demolink">sample</a><code style="margin-left:10px">%desc</code></match>
+  </switch>
+  <inline tagname="child" preload="template-doc-root.xml" substitution="%child"/>
+  <variable tagname="count(child)" substitution="%check" pickup="xpathresult"/>
+  <condition substitution="%contents-and-ending"><js><![CDATA[%check==0]]></js>
+  <true>%fxxxx</true>
+  <false>%optstart&amp;gt;%optend<input type="button" value="..." onclick="var e=this.nextSibling;ooo.toggleclass(e,'-singlehide');e=e.nextSibling.nextSibling.nextSibling;ooo.toggleclass(e,'-singlehide')" /><div class="ichild -singlehide"><code style="margin-left:-10px">%desc</code>%child</div>%optstart&amp;lt;/%name&amp;gt;%optend<a href="sample.htm?t=%example" target="_blank" class="demolink">sample</a><code style="margin-left:10px">%desc</code></false>
+  </condition>
+  <html>%contents-and-ending</html>
+</rowtype>
+</document></templatexml>
+
+
+<dataxml w="29%">
+<document><!--A boring tree with informations about supported nodes in a template -->
+<child name="anydocument"  n="1">
+ <child name="querystring" n="0+" o="o" g="datapickup" ex="constants">
+ 	<a n="varname"/><a n="substitution" /><a n="escape" o="o" />
+	<desc>The first type of data that will be picked up and be available as substitution for output content.<br/>
+		Variables will be read from the current location href's querystring.</desc>
+ </child>
+ <child name="cookie" n="0+" o="o" g="datapickup" ex="constants">
+ 	<a n="varname"/><a n="substitution" /><a n="escape" o="o" />
+	<desc>The second type of data that will be picked up and be available as substitution for output content.<br/>
+		Variables will be read from the current cookies collection.</desc>
+ </child>
+ <child name="constant" n="n" o="o" g="datapickup" ex="constants">
+ 	<a n="tagname"/><a n="substitution" /><a n="pickup" o="o" /><a n="escape" o="o" />
+	<desc>The third type of data that will be picked up from the data document to available as substitution for output content.</desc>
+ </child>
+ <child name="constantjavascript" n="n" o="o" g="datapickup" x="x"  ex="constants">
+ 	<a n="substitution" /><a n="escape" o="o" />
+ 	<desc>The fourth type of data that will be picked up from the data document to be available as substitution. The contents of this node will be first substituted with available substitutions and then js evalued (then optionally esacaped), before being available as substitution.</desc>
+ </child>
+ <child name="constantcondition" n="n" o="o" g="datapickup" ex="constants">
+ 	<a n="substitution" /><a n="escape" o="o" />
+ 	<desc>This is the fifth type of data that will be picked up and to be available as substitution.</desc>
+ 	<child name="js" x="x"><desc>The contents of this node will be first substituted with available substitutions and then evalued as javascript however results will be reduced to TRUE|FALSE</desc></child>
+ 	<child name="true" x="x"><desc>The contents of this node will be choosen if the js evaluates to true, previously existing substitutions are available here.</desc></child>
+ 	<child name="false" x="x"><desc>The contents of this node will be choosen if the js evaluates to false, previously existing substitutions are available here.</desc></child>
+ 	<child name="error" x="x"><desc>The contents of this node will be choosen if the js cannote be avaluated, previously existing substitutions are available here.</desc></child> 	
+ </child>
+ <child name="beforeall" n="0-1" o="o" x="x" ex="constants"><desc>The contents of this node, if present, will be the very start of the rendered output string. constant,constantjavascript and constantcondition substitutions are available here.</desc></child>
+ <child name="afterall" n="0-1" o="o" x="x" ex="constants"><desc>The contents of this node, if present, will be the very end of the rendered output string. constant,constantjavascript and constantcondition substitutions are available here.</desc></child>
+ <child name="onloadall" n="0+" o="o" x="x" ex="constants"><desc>The contents of this nodes, if present, will be the js evalued at the end of the rendering. constant,constantjavascript and constantcondition substitutions are available here. If more nodes are present they will be evalued one by one so that errors won't impact one other.</desc></child>
+  <child name="constantcontrol" n="n" o="o"><a n="target"/><a n="ntturl"/><a n="dataurl"/><a n="mode" o="o"/>
+  	<desc>It's for chainloading some other rendercontrol at the end of this one, for example if the target will be generated by the current
+template. It needs 3 attributes(target-ntturl-dataurl), and has one more optional attribute "mode" - those attributes corresponds to the method uno.xml.rendercontrol - however not normally useful beyon "#UNIQUEID#"- in the contents of this attributes the "CONSTANT" substitutions are available.<br/>Note that the functionality expressed by this particular node is just equivalent to adding a "onloadall" element in wich there is an uno.xml.rendercontrol instruction.
+IT's preferable to use the node however, for example for further compatibility with UI-EDITOR - since it will know it's another template instead of any other javascript.</desc> 	
+  </child>
+  <child name="rowtype" o="o" n="0+"><a n="xpath"/><a n="max" o="o"/>
+  	<desc>Rowtypes will be evaluated in the order in wich they are present in the template.<br/>
+    The rowtype elements functionalities are the core of the rendercontrol system. It's a node that defines all the rules for transforming specific data. For example if we wanted to take all the nodes of type "book" from some xml data and render a list of it.<br/>
+    First of all a rowtype has an attribute tagname, that can contain any XPATH expression matching to any number of same or different nodes presumed to be in the data document. If the xpath expression matches more nodes the rowtype will be "rendered" for all the nodes(except if limiting the number of repetions with the "max" attribute).<br/><br/>
+
+    There is a limitless number of way to obtain substiutions that will ultimately be available in the html child node.
+    That is the contents of the html node, substituted with all the "constant" substitutions and all the substitutions from the current row, WILL be renderend for each node matching the xpath expression.
+    </desc>
+  	<child name="variable" o="o"><a n="xpath"/><a n="substitution" /><a n="pickup" o="o" /><a n="escape" o="o" /></child>  	
+  	<child name="switch" o="o"><a n="value"/><a n="substitution" /><a n="escape" o="o" />
+  		<desc>Switch elements...</desc>
+  		<child name="match" n="1+" x="x"><a n="value"/><a n="default"/><desc>Match elements...	</desc></child>
+    </child>
+  	<child name="inline" o="o"><a n="xpath"/><a n="substitution" /><a n="preload" /><desc>Inline elements...	</desc></child>
+  	<child name="condition" n="n" o="o" g="datapickup">
+ 		<desc>This is the fourth type of "VARIABLES" data that will be picked up and be available as substitution.</desc>
+ 		<child name="js" x="x"><desc>The contents of this node will be first substituted with "CONSTANTS" substitution and previous "VARIABLES" substitution, then evalued as javascript : results will be reduced to TRUE|FALSE</desc></child>
+ 		<child name="true" x="x"><desc>The contents of this node will be choosen if the js evaluates to true, previously existing substitutions are available here.</desc></child>
+ 		<child name="false" x="x"><desc>The contents of this node will be choosen if the js evaluates to false, previously existing substitutions are available here.</desc></child>
+ 		<child name="error" x="x"><desc>The contents of this node will be choosen if the js cannote be avaluated, previously existing substitutions are available here.</desc></child>
+ 	<a n="escape" t="enum" o="o" />
+ 	<a n="substitution" t="string" />
+ </child>
+  	<child name="before" o="o" x="x"><desc>The contents of this node, if present, will be the very start of the rendered output string for this ROWTYPE, Note that only "CONSTANTS" substitutions are available here.</desc></child>
+  	<child name="between" o="o" x="x"></child>
+  	<child name="after" o="o" x="x"> <desc>The contents of this node, if present, will be the very end of the rendered output string for this ROWTYPE, Note that only "CONSTANTS" substitutions are available here.</desc></child>
+  	<child name="casezero" o="o" x="x"></child>
+  	<child name="onload" n="n" o="o" x="x"><desc>The contents of this node, if present, will be the js evalued at the end of the rendering.  "CONSTANTS" substitution and previous "VARIABLES" substitution are available here. If more nodes are present they will be evalued one by one so that errors won't impact one other. Note that because this onload is in the rowtype, one "substituted" copy of the script will be executed for each node matching the rowtype;While "CONSTANTS" substitutions are always the same here, "VARIABLES" substitutions are of course different for each matched node.</desc></child>
+  	<child name="control" n="n" o="o"><desc>It's for chainloading some other rendercontrol at the end of this one, for example if the target will be generated by the current template. It needs 3 attributes(target-ntturl-dataurl), and has one more optional attribute "mode" - those attributes corresponds to the method uno.xml.rendercontrol - however not normally useful beyon "#UNIQUEID#"- in the contents of this attributes the "CONSTANTS" substitutions are available.<br/>
+    Note that the functionality expressed by this particular node is just equivalent to adding a "onloadall" element in wich there is an uno.xml.rendercontrol instruction.<br/>
+    IT's preferable to use the node however, for example for further compatibility with UI-EDITOR - since it will know it's another template instead of any other javascript.<br/>
+    Note that because this element is in the rowtype, one copy of the control with "substituted" parameters will be executed for each node matching the rowtype;While "CONSTANTS" substitutions are always the same here, "VARIABLES" substitutions are of course different for each matched node.</desc>
+
+ 	<a n="target" t="elm" />
+ 	<a n="ntturl" t="url" />
+ 	<a n="dataurl" t="url" />
+ 	<a n="mode" t="enum" o="o"/>
+  </child>
+  </child>
+  <desc>This page presents the possible structures of an ooox template. It's the xml definition for creating them. The "ooox template references".<br/>
+ooox templates are written in XML.<br/>
+Their primary pourpose is to transform (via ooox render engine) arbitrarily picked xml data into ANY STRING, customly generated javascript can also be evaluated in various handy way during the execution of the transform.<br/>
+Is't roughly based on SELECTION and SUBSTITUTION, the main pattern being:<br/>
+1-The template having means of indicating to the engine the data to select and assigning substitutions tokens (prefixedly unique)<br/>
+2-Having the raw output necessary written in the template with the substitutions token in it, where needed.<br/>
+However it's very smart and refined : heare a brief feature list:<br/>
+-There is basically only <a href="#" onclick="var x=ooo.$$('onelineofcode');ooo.showhide([x],x.style.display=='none');return false;" style="text-decoration:underline">one line of code</a>, made of one simple instruction, that you to use 99% of times you need the engine.<br/>
+<div style="margin:20px;display:none;" id="onelineofcode">-uno.xml.rendercontrol(target,'templateurl.xml','dataurl.xml');<br/>
+-uno.xml.rendercontrol(target,'templateurl.xml','dataurl.xml',formelm); (for sending a form in the data request)<br/>
+-uno.xml.rendercontrol(target,'templateurl.xml','dataurl.xml',false,onfinish); (for executing some handler at the end(that however should not be part of the render, since if integral with the template you would include them in the template itself.))<br/>
+-uno.xml.rendercontrol(targetelm,'templateurl.xml','dataurl.xml',false,false,'append'); or 'insert' for having the output be appended or pushed as first child of target, instead of replacing it.</div>
+-Supports automagic preload of templates used "inline" other templates.(So you can stick to you line of code.)<br/>
+-Supports template recursion and chainloading in a number of different ways.(inlines, requiring preload, being only one of them)<br/>
+-Perfect support of CDATA elements (often very useful in templates) and all possible use cases for special charactes.<br/>
+-Allowing perfect match and single charachters and whitespaces fidelity to the template it allows for all "extreme" usages.<br/>
+<br/>So It's important to understand that there are 2 basic levels of substitutions, we call them "CONSTANTS" and "VARIABLES":<br/>
+"CONSTANTS" substitutions are fetched and prepared before and are generally always available.<br/>
+"VARIABLES" substitutions are fetched and prepared for each matched row .</desc>
+</child>
+</document></dataxml>
+</sample>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?><document><querystring varname="t" substitution="%title"/><title>OOO - %title.xml</title>
+<constant tagname="//templatexml" substitution="%txml" pickup="cdata"/><constant tagname="//dataxml" substitution="%dxml" pickup="cdata"/>
+<constant tagname="//templatexml/@w" substitution="%Wtxml"/><constant tagname="//dataxml/@w" substitution="%Wdxml"/>
+<beforeall><input type="button" onclick="var a=document.getElementsByTagName('textarea');var v='';if(this.value=='HIDE-UI'){v='none';this.value='SHOW-UI'}else{this.value='HIDE-UI'}a[0].style.display=v;a[1].style.display=v" value="HIDE-UI" style="position:absolute;top:0px;right:0px;" />
+  <textarea style="width:%Wtxml;">%txml</textarea><textarea style="width:%Wdxml;">%dxml</textarea><input type="button" onclick="if(this.value=='RENDER'){ooo.syncrender(eNS(this),ooo.parsexml(ePS(ePS(this)).value).documentElement,ooo.parsexml(ePS(this).value).documentElement);this.value='CLEAR';}else{eNS(this).innerHTML='';this.value='RENDER';}" value="RENDER" style="position:absolute;top:0;left:0px;z-index:1001"/><div>...</div></beforeall>
+  <rowtype tagname="//userandomdata"><variable tagname="@num" substitution="%n"/><onload><![CDATA[ghh=function(n){var s='';var i=0;var k=0;for(i=0;i<1000;i++){s+='<n ';for(k=0;k<n;k++){s+='k'+k+'="'+Math.random()+'" '}s+='/>'}return s};document.getElementsByTagName('textarea')[1].innerHTML='<document>'+ghh(%n)+'</document>';]]></onload><html> </html></rowtype>
+</document>

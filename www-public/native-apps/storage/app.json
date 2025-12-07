@@ -1,9 +1,0 @@
-{
-  "name": "Storage Explorer",
-  "id": "storage",
-  "version": "0.1.0",
-  "author": "standalone.io",
-  "icon": "📁",
-  "entryFragment": "/native-apps/storage/fragment.html"
-}
-

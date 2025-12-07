@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sample>
+<templatexml w="69%">
+       <document>
+  <constant tagname="a" substitution="%a"/>
+  <constant tagname="b" substitution="%b"/>
+  <constant tagname="c/@n" substitution="%cn"/>
+  <constant tagname="a|b|b2|c|c/@n" substitution="%pickedup" pickup="csv:, "/>
+  <constant tagname="a|b|b2|c|c/@n" substitution="%jspickedup" pickup="csv:, " escape="url"/>
+  <constant tagname="b" substitution="%jsb" escape="js"/>
+  <constant tagname="b2" substitution="%js2b" escape="js"/>
+
+  <constantjavascript substitution="%cjs">Math.sqrt(25*4.56).toString()+'jssss'</constantjavascript>
+
+  <constantcondition substitution="%ccond1"><js>'%a'=='%b'</js>
+    <true>Const cond 1 evalued TRUE (%cn1)<br/></true><false>Const cond 1 evalued FALSE (%cn1)<br/></false>
+    <error>Const cond 1 evalued ERROR (%cn1)<br/></error></constantcondition>
+  <constantcondition substitution="%ccond2"><js>'%a'=='%jsb'</js>
+    <true>Const cond 2 evalued TRUE (%cn2)<br/></true><false>Const cond 2 evalued FALSE (%cn2)<br/></false>
+    <error>Const cond 2 evalued ERROR (%cn2)<br/></error></constantcondition>
+  <constantcondition substitution="%ccond3"><js>'%jsb'=='%js2b'</js>
+    <true>Const cond 3 evalued TRUE (%cn3)<br/></true><false>Const cond 3 evalued FALSE (%cn3)<br/></false>
+    <error>Const cond 3 evalued ERROR (%cn3)<br/></error></constantcondition>
+    
+  <afterall><div style="border:1px solid black">(this is afterall)<br/>Following some conditions : <br/>%ccond1%ccond2%ccond3</div></afterall>
+  <beforeall><div style="border:1px solid black">(this is beforeall)<br/>
+             One constant : %a<br/>Other two constants : %b and %cn<br/>
+             Another phrase : %js2b AND %cn : %a AND %b %cjs<br/>
+             Csv pickup : %pickedup<br/>
+             Csv pickup (urlescaped) %jspickedup<br/></div></beforeall>
+</document></templatexml>
+<dataxml w="29%"><document>
+  <a>data a</a>
+  <b>data ' b</b>
+  <b2>data ' b</b2>
+  <c n="hey!">data c</c>
+</document></dataxml>
+</sample>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html><head><title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<script src="./it3.js"></script>
+<style>
+*{margin:0;padding:0}
+html,body{text-align:center;max-width: 100%;min-width: 80%;}
+#main{margin:auto;text-align:left;}
+.autoscreenshot{display:none}
+.hide_firedesk{display:none !important}
+.firedesk_new_activity_button{display:none}
+.newdoo_root{display:none !important}
+#GOOGLE_SIGNOUT,.newdoo-menu{display:none !important}
+
+.xnws-fragment{border:1px dashed #dddddd;margin:-1px -1px}
+.xnws-fragment:hover{border-color:#ff9966;cursor:default;border-width:2px;margin:-2px -2px -2px -2px}
+.xnws-fragment.xnws-fragment:active,.xnws-fragment.xnws-active{border-color:#ff3333;border-width:2px;margin:-2px -2px -2px -2px}
+.xnws-fragment-editor{position:absolute;right:0;top:0;z-index:100;background-color: rgba(255,255,255,0.8);}
+
+
+/*##########################################################*/
+
+</style>
+<script type="module">
+import {it4} from "./it4.js";window.it4=it4;
+import {NEWDOO} from "./newdoo.js";window.NEWDOOloaded=false;
+let cL=it3.querystring('lang');
+if(!cL){cL=sessionStorage.getItem('curLANG');}
+if(!cL){
+let navlang=window.navigator.language;
+if(navlang=='it-IT'){navlang='ita'}
+else if(navlang.toLowerCase().indexOf('en')>-1){navlang='eng'}
+else if(navlang.toLowerCase().indexOf('fr')>-1){navlang='fra'}
+else if(navlang.toLowerCase().indexOf('es')>-1){navlang='spa'}
+else if(navlang.toLowerCase().indexOf('de')>-1){navlang='deu'}
+else{navlang='eng'}
+sessionStorage.setItem('curLANG',navlang);cL=navlang;
+}
+window.currLANG=cL;
+window.NEWDOO=NEWDOO;window.NEWDOO.init({
+storage:{type:'FIREBASE',
+	apiKey: "AIzaSyAnk2KPM_xI4aC4lB4KjkqYfkIxqm6uHcM",
+	authDomain: "gpo-firebase.firebaseapp.com",
+	databaseURL: "https://gpo-firebase-default-rtdb.europe-west1.firebasedatabase.app",
+	projectId: "gpo-firebase",
+	storageBucket: "gpo-firebase.appspot.com",
+	messagingSenderId: "503702556354",
+	appId: "1:503702556354:web:7b13436f95e75eb74e755b",
+	measurementId: "G-L47C0XE8LV",
+	localstorageDB:"newdoo"
+},
+auth:{
+	apiKey: "AIzaSyAnk2KPM_xI4aC4lB4KjkqYfkIxqm6uHcM",
+	authDomain: "gpo-firebase.firebaseapp.com",
+	databaseURL: "https://gpo-firebase-default-rtdb.europe-west1.firebasedatabase.app",
+	projectId: "gpo-firebase",
+	storageBucket: "gpo-firebase.appspot.com",
+	messagingSenderId: "503702556354",
+	appId: "1:503702556354:web:7b13436f95e75eb74e755b",
+	measurementId: "G-L47C0XE8LV"
+},
+embedded:true,
+addons:['website'/*,'../dev-addons/newdoo-website'*/],
+integrateFunction:function(){window.NEWDOOloaded=true}
+});	
+window.app={loadtrycounter:0,rooturl:'/www-static/preview.html',
+	load:async function(){if(!NEWDOOloaded){app.loadtrycounter++;if(app.loadtrycounter<100){setTimeout(app.load,200);}else{console.log('Failed INIT : Tried to wait for NEWDOO for '+app.loadtrycounter+' times')}return false;}
+		//todo:history
+		let L=document.location;
+		let host=L.host;
+		let WS=await NEWDOO.storage.query('website_site',['bindings','like',host]);
+		if(WS.length==0){WS=await NEWDOO.storage.query('website_site',['bindings','like','*']);}
+		let P=false;
+		let q=document.location.pathname.replace(app.rooturl,'/');
+		let qs=document.location.search;
+		let qsh=document.location.hash;
+		if(qs){qs=qs.replace('?','/');P=await NEWDOO.storage.query('website_page',['url','==',qs]);}
+		if(!P){P=await NEWDOO.storage.query('website_page',['url','==',q]);}
+		if(P.length>0){P=P[0]}else{P=false}
+		if(!P){P={id:'404 not found',lang:'eng',structure:'404 page not found'}}
+		if(WS.length==0){WS=await NEWDOO.storage.query('website_site',['bindings','like','*']);}
+		app.loadwebsite(WS,P);
+		//load_page
+	},
+	_loadscripts:function(html,mm){let m=mm.next();
+		while(m.value){
+			let src=m.value[0].split('src')[1];
+			src=src.split('=')[1];src=src.split('"')[1];src=src.split('"')[0];
+			it3.ins(document.head,'script',['src',src]);
+			html=html.replace(m.value[0],'');
+			m=mm.next();
+		}return html;
+	},
+	_loadstyles:function(html,mm){let m=mm.next();
+		while(m.value){
+			let href=m.value[1];
+			it3.ins(document.head,'link',['rel','stylesheet','href',href]);
+			html=html.replace(m.value[0],'');
+			m=mm.next();
+		}return html;
+	},
+	loadwebsite:async function(WS,P){
+		let tmp='';
+		if(WS.length>0){WS=WS[0];
+			//tmp=NEWDOO.UTILS.unhtmlentities(WS.head);
+			tmp=WS.head;
+			if(tmp){while(tmp.indexOf('<fragment')>0){tmp=await app.loadfragments(tmp);}
+				let mm=tmp.matchAll(/<script[^>]* src[^>]*>[^\/]*\/script>/g);
+				tmp=this._loadscripts(tmp,mm);
+				mm=tmp.matchAll(/<script[^>]* src[^>]*\/>/g);
+				tmp=this._loadscripts(tmp,mm);
+				mm=tmp.matchAll(/<link[^>]* href[^=]*=[^"]*"([^"]*)"[^>]*\/>/g);
+				tmp=this._loadstyles(tmp,mm);
+				mm=tmp.matchAll(/<link[^>]* href[^=]*=[^"]*"([^"]*)"[^>]*>/g);
+				tmp=this._loadstyles(tmp,mm);
+				mm=tmp.matchAll(/<script[^>]*>([^<]*[^\/]*[^>]*)<\/script>/g);
+				let m=mm.next();let ss='';
+				while(m.value){ss=ss+m.value[1];tmp=tmp.replace(m.value[0],'');m=mm.next();}
+				ss=ss.trim();if(!it3.inoe(ss)){it3.ins(document.head,'script',false,ss);}
+				tmp=tmp.trim();
+				mm=tmp.matchAll(/<style[^>]*>([^<]*[^\/]*[^>]*)<\/style>/g);
+				m=mm.next();ss='';
+				while(m.value){ss=ss+m.value[1];tmp=tmp.replace(m.value[0],'');m=mm.next();}
+				ss=ss.trim();if(!it3.inoe(ss)){it3.ins(document.head,'style',false,ss);}
+				tmp=tmp.trim();
+				if(!it3.inoe(tmp)){
+					console.log('residual head');
+					console.log(tmp);
+				}
+			}
+			//tmp=NEWDOO.UTILS.unhtmlentities(WS.header);
+			tmp=WS.header;
+			if(tmp){while(tmp.indexOf('<fragment')>0){tmp=await app.loadfragments(tmp);}
+				tmp=it3.run_scripts(tmp,true);
+				it3.ins(document.body,'div',['class','xnws-header'],tmp);}
+			
+			tmp=P.structure;
+			if(tmp){while(tmp.indexOf('<fragment')>0){tmp=await app.loadfragments(tmp);}
+				tmp=it3.run_scripts(tmp,true);
+				let x=it3.ins(document.body,'div',['class','xnws-page'],tmp);
+			}
+			
+			//tmp=WS.footer.replace(/ /g,' ');
+			tmp=NEWDOO.UTILS.unhtmlentities(WS.footer);
+			if(tmp){while(tmp.indexOf('<fragment')>0){tmp=await app.loadfragments(tmp);}
+				tmp=it3.run_scripts(tmp,true);
+				let x=it3.ins(document.body,'div',['class','xnws-footer'],tmp);
+			}
+			xnws.makeup_page();
+		}
+	},
+	fragmentcache:{},
+	loadfragments:function(html){return new Promise(async function(resolve,reject){
+		let mm=html.matchAll(/<fragment[^\/]*\/>/g);
+		let m=mm.next();let tmp='';let faa={};let fa='';let a=false;
+		while(m.value){
+			fa=m.value[0].replace('<fragment','').replace('/>','').trim();
+			fa=fa.matchAll(/[^=]*=[^"]*"[^"]*"/g);
+			a=fa.next();
+			while(a.value){if(a.value){a=a.value[0].split('=');a[1]=a[1].trim();faa[a[0].trim()]=a[1].substr(1,a[1].length-2).trim();}a=fa.next();}
+			if(!faa['class']){faa.class='xnws-fragment xnws-f-'+faa['x-name']}else{faa.class='xnws-fragment xnws-f-'+faa['x-name']+' '+faa.class}
+			let F=await xnws.get_frag_from_g(faa['x-name']);
+			if(F){
+				//faa['id']='xnws-'+F.id;
+				let TN=faa['x-tagname']||'div';
+				for(let k in faa){if(k.indexOf('x-')!=0){tmp=tmp+' '+k+'="'+faa[k]+'"'}}
+				if(faa['x-data']){tmp=tmp+' x-data="'+faa['x-data']+'"';
+					let dd='async function justnow(){return '+faa['x-data']+'}justnow';
+					dd=eval(dd);dd=await(dd());
+					tmp='<'+TN+tmp+'>'+it4.render.string(NEWDOO.UTILS.unhtmlentities(F.content),dd)[0]+'</'+TN+'>';
+				}else{
+					F.content=it4.render.run_scripts(F.content,true);
+					tmp='<'+TN+tmp+'>'+F.content+'</'+TN+'>';
+				}
+			}else{
+				console.log('Fragment not found '+JSON.stringify(faa)); 
+				tmp='Fragment not found';
+			}
+			html=html.replace(m.value[0],tmp);
+			m=mm.next();tmp='';faa={};
+		}
+		resolve(html);
+	});}
+};
+window.xnws={fragmentcache:{},
+	makeup_page:function(elm){let _this=this;
+		let ee=document.getElementsByClassName('xnws-fragment');
+		let click=function(event){_this.UI_elm_click(event)}
+		for(let e=0;e<ee.length;e++){
+			ee[e].addEventListener('click',click);
+		}
+	},
+	get_frag_from_g:async function(g){
+		let F=this.fragmentcache[g+currLANG];
+		if(!F){F=await NEWDOO.storage.query('website_fragment',['group','==',g,'lang','==',currLANG]);}else{return F}
+		if(F.length==0){F=await NEWDOO.storage.query('website_fragment',['group','==',g,'lang','==','eng']);}
+		if(F.length==0){F=await NEWDOO.storage.query('website_fragment',['group','==',g,'lang','==','ita']);}
+		if(F.length==0){F=await NEWDOO.storage.query('website_fragment',['group','==',g]);}
+		if(F.length>0){F=F[0];/*F.content=NEWDOO.UTILS.unhtmlentities(F.content);*/this.fragmentcache[g+currLANG]=F;return F;}else{return false}
+	},
+	UI_fragment_editor:`<input type="hidden" class="fid" JS-value="'xnws-f-'+this.group"/><!--JS{this.group+'-'+currLANG}JS--><button onclick="xnws.UI_close_editor(event)" class="btn">X</button><br/><textarea class="xnws-editor-content"><!--JS{NEWDOO.UTILS.htmlentities(this.content)}JS--></textarea>
+		<br/><span style="font-size:smaller"><!--JS{this.modified.toLocaleString()}JS--> by <br/>  
+		<!--JS{this.modified_by}JS-->
+		</span>
+		<br/><button onclick="xnws.UI_fragment_preview()" />Preview</button><button onclick="xnws.UI_fragment_save()" />Save</button>`,
+	UI_elm_click:async function(event){let f=this.UI_find_parent(event.target,'xnws-fragment');
+		let p=document.querySelector('.xnws-fragment-editor');
+		if(p){this.UI_close_editor()}
+		p=it3.ins(document.body,'div',['id',it3.uid('xnws'),'class','xnws-fragment-editor']);
+		let fid='';for(let k=0;k!=f.classList.length;k++){if(f.classList[k].indexOf('xnws-f-')==0){fid=f.classList[k];break;}}
+		let frag=await xnws.get_frag_from_g(fid.replace('xnws-f-',''));
+		it3.render(p,this.UI_fragment_editor,frag);
+		document.querySelectorAll('.'+fid).forEach(elm=>{elm.classList.add('xnws-active');});
+	},
+	UI_fragment_preview:async function(_norun){let c=document.querySelector('.xnws-fragment-editor .fid').value;
+		let ee=document.querySelector('.xnws-fragment-editor .xnws-editor-content');
+		let html=ee.value;let cc=document.querySelectorAll('.'+c);if(cc.length==0){console.log('no element to update');return false;}
+		let xd=cc[0].getAttribute('x-data');
+		if(!it3.inoe(xd)){
+			let dd='async function justnow(){return '+xd+'}justnow';dd=eval(dd);dd=await(dd());
+			console.log(html);console.log(dd);
+			cc.forEach(elm=>{it4.render.to(elm,html,dd)});
+		}else{
+			if(!_norun){html=it3.run_scripts(html);}
+			cc.forEach(elm=>{elm.innerHTML=html;});
+		}
+		
+	},
+	UI_fragment_save:function(){this.UI_fragment_preview();let c=document.querySelector('.xnws-fragment-editor .fid').value.replace('xnws-f-','');
+		let html=document.querySelector('.xnws-fragment-editor .xnws-editor-content').value;
+		NEWDOO.storage.update('website_fragment',{id:c,content:NEWDOO.UTILS.unhtmlentities(html)});
+	},
+	UI_close_editor:function(event){if(event){it3.fix(event)}let c=document.querySelector('.xnws-fragment-editor .fid');if(c){c=c.value;console.log(c);
+		document.querySelectorAll('.'+c).forEach(elm=>{elm.classList.remove('xnws-active');});}
+		let p=document.querySelector('.xnws-fragment-editor');if(p){p.parentElement.removeChild(p);}
+	},
+	UI_find_parent:function(elm,pclass){
+		if(elm.classList.contains(pclass)){return elm}
+		else{if(elm.parentElement){return this.UI_find_parent(elm.parentElement,pclass)}else{return false}}
+	}
+}
+</script></head><body onload="app.load()">
+</body></html>

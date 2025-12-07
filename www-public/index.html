@@ -1,93 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>standalone.io – Web OS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
-  <meta name="description" content="standalone.io – a web-native operating system shell for apps and agents." />
-  <meta name="theme-color" content="#050611" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="standalone.io" />
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <link rel="icon" sizes="192x192" href="/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-  <!-- Window manager (desktop / tablet) -->
-  <link rel="stylesheet" href="https://unpkg.com/winbox@0.2.82/dist/css/winbox.min.css" />
-  <!-- OS shell styles -->
-  <link rel="stylesheet" href="/css/os-shell.css" />
-</head>
-<body>
-  <div class="os-root">
-    <main class="os-desktop">
-      <section class="os-desktop-row os-desktop-row--primary">
-        <aside class="os-pane os-pane--sidebar">
-          <nav class="os-workspace-strip">
-            <button class="os-workspace-dot is-active" data-workspace-id="default" title="Default workspace"></button>
-            <button class="os-workspace-dot" data-workspace-id="research" title="Research workspace"></button>
-            <button class="os-workspace-dot" data-workspace-id="coding" title="Coding workspace"></button>
-            <button class="os-workspace-dot" data-workspace-id="playground" title="Playground workspace"></button>
-          </nav>
-        </aside>
+<html><head><title>STANDALONE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<script src="it3.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/jimmywarting/StreamSaver.js/StreamSaver.js"></script>
+<style>
+*{margin:0;padding:0}
+html,body{text-align:center;width:100vw;height:99vh;}
+#main{margin:auto;text-align:left;}
+.autoscreenshot{display:none}
+.hide_firedesk{display:none !important}
+.firedesk_new_activity_button{display:none}
+#GOOGLE_SIGNOUT{display:none !important}
+.readonly{outline:none}
+</style>
+<script type="module">
+import {it4} from "./it4.js";window.it4=it4;
+	import {NEWDOO} from "./newdoo.js";
+	window.NEWDOO=NEWDOO;
+let cL=it3.querystring('lang');
+if(!cL){cL=sessionStorage.getItem('curLANG');}
+if(!cL){
+let navlang=window.navigator.language;
+if(navlang=='it-IT'){navlang='ita'}
+else if(navlang.toLowerCase().indexOf('en')>-1){navlang='eng'}
+else if(navlang.toLowerCase().indexOf('fr')>-1){navlang='fra'}
+else if(navlang.toLowerCase().indexOf('es')>-1){navlang='spa'}
+else if(navlang.toLowerCase().indexOf('de')>-1){navlang='deu'}
+else{navlang='eng'}
+sessionStorage.setItem('curLANG',navlang);cL=navlang;
+}
+window.currLANG=cL;
 
-        <section class="os-pane os-pane--workspace">
-          <div class="os-window">
-            <div class="os-window-titlebar">
-              <div class="os-window-dots">
-                <span class="os-window-dot"></span>
-                <span class="os-window-dot"></span>
-                <span class="os-window-dot"></span>
-              </div>
-              <div class="os-window-title">Workspace</div>
-            </div>
-            <div class="os-window-body">
-              <p class="os-window-placeholder">
-                Select an app from the launcher or dock to open it in this workspace.
-              </p>
-            </div>
-          </div>
-        </section>
 
-        <section class="os-pane os-pane--launcher">
-          <h2 class="os-section-title">Launcher</h2>
-          <h3 class="os-section-heading">Apps</h3>
-          <div class="os-app-grid-inner">
-            <button class="os-tile" data-app-id="storage">
-              <span class="os-tile-icon">📁</span>
-              <span class="os-tile-title">Storage</span>
-              <span class="os-tile-sub">Explore browser storage</span>
-            </button>
-            <button class="os-tile" data-app-id="example-app">
-              <span class="os-tile-icon">💠</span>
-              <span class="os-tile-title">Hello app</span>
-              <span class="os-tile-sub">Example native fragment</span>
-            </button>
-            <button class="os-tile">
-              <span class="os-tile-icon">💬</span>
-              <span class="os-tile-title">Chat</span>
-              <span class="os-tile-sub">Conversations & agents</span>
-            </button>
-            <button class="os-tile">
-              <span class="os-tile-icon">🧠</span>
-              <span class="os-tile-title">Memory</span>
-              <span class="os-tile-sub">Personal context</span>
-            </button>
-            <button class="os-tile" data-app-id="settings">
-              <span class="os-tile-icon">⚙️</span>
-              <span class="os-tile-title">Settings</span>
-              <span class="os-tile-sub">System preferences</span>
-            </button>
-          </div>
-        </section>
-      </section>
-    </main>
 
-  </div>
 
-  <script src="https://unpkg.com/winbox@0.2.82/dist/js/winbox.min.js"></script>
-  <script src="/js/os-core.js"></script>
-  <script src="/js/os-style-manager.js"></script>
-  <script src="/js/os-shell.js"></script>
-</body>
-</html>
+	window.NEWDOO.init({
+		storage:{type:'FIREBASE',
+apiKey: "AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
+  authDomain: "standalone-io.firebaseapp.com",
+  projectId: "standalone-io",
+  storageBucket: "standalone-io.firebasestorage.app",
+  messagingSenderId: "632415905019",
+  appId: "1:632415905019:web:b895dbd8bd6d1260b33c5e",
+  measurementId: "G-K1EJDR8DNH",
+			localstorageDB:"newdoo"
+		},
+
+		auth:{
+apiKey: "AIzaSyBRoDJNcya8Et5EvjEIIONYe4veO3_i8rk",
+  authDomain: "standalone-io.firebaseapp.com",
+  projectId: "standalone-io",
+  storageBucket: "standalone-io.firebasestorage.app",
+  messagingSenderId: "632415905019",
+  appId: "1:632415905019:web:b895dbd8bd6d1260b33c5e",
+  measurementId: "G-K1EJDR8DNH"
+		},
+		embedded:false,
+		addons:['helpdesk'/*,'../dev-addons/newdoo-website'*/],
+		integrateFunction:function(){console.log('newdoo loaded');}
+	});
+</script>
+<link rel="stylesheet" href="./newdoo.css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+</head><body>
+</body></html>

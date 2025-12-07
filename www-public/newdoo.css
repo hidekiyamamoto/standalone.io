@@ -1,0 +1,61 @@
+.newdoo_root {left:0vw;top:0vh;width: 100%;
+	display: none;
+	position: absolute;
+	z-index: 100;text-align:left;
+	background-color: #f3f3f3;height: 100vh;overflow:auto;
+}
+.newdoo_root button{
+	font-weight:bold;
+}
+.newdoo_root .hd_top_bar{height:50px;line-height:50px;vertical-align:middle;
+			display: block;
+			font-size: 25px;
+			padding-top: 2px;
+			padding-left: 10px;
+			margin-bottom: 10px;
+			border-bottom: 2px solid #cccccc;}
+.newdoo_root .hd_top_bar button{
+	/*height: 36px;margin-left:5px;padding:0px 5px;
+	border: 2px solid #cccccc;*/
+	float:right;
+}
+.newdoo_root .hd_top_bar button:hover{background-color:#cccccc}
+.newdoo_root .title{color:inherit}
+.newdoo_root .results_target{width:90%;margin:auto;display:none}
+.newdoo_root .details_target{width:90%;margin:auto;display:none}
+.newdoo_root .details_target label{display:inline-block;width:110px;text-align:right;margin-right: 10px;
+    margin-bottom: 0;background-color: transparent !important;}
+.newdoo_root .ticket_img{width:170px;}
+.hd_active{display:block}
+.newdoo_root .hd_active{display:block}
+.newdoo_root table{border-collapse:collapse;width:100%;}
+.newdoo_root table th{border:1px solid silver;padding:2px 5px}
+.newdoo_root table td{border:1px solid silver;padding:2px 5px}
+.newdoo_root div button:first-of-type{margin-left:0}
+
+
+.newdoo-sheet{padding:2%;margin:auto;border:1px solid #ced4da;background-color:#f9f9f9;box-shadow: 0 5px 20px -15px black;}
+.newdoo-flex{display:flex;align-items:baseline;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: stretch;}
+.newdoo-flex > div {
+    min-width: 34%;
+}
+.newdoo-form label {font-weight:bold;display:inline-block;width:110px;text-align:right;margin-right: 10px;background-color: transparent !important;}
+.newdoo-form textarea, .newdoo-form div.textarea {width:100%;display:inline;background-color:#ffffff;    white-space: break-spaces;border-radius:5px;}
+.newdoo-form input,.newdoo-form select{width:350px;border:1px solid silver;}
+.newdoo-form input[type=checkbox]{width:auto;vertical-align:middle}
+
+.newdoo-menu ul{display:none;position:absolute;
+    right: 0.5vw;
+    top:2vh;
+    padding-top:1vh;
+    border: 2px solid lightgrey;
+    border-radius: 3px;
+    background-color: lightgray;
+    transition: 1000ms ease all;
+    list-style: none;}
+.newdoo-menu:hover ul{display:block}
+.newdoo-menu ul:hover{display:block}

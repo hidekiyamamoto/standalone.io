@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sample>
+<templatexml w="69%">
+<document>
+ <constantjavascript substitution="jsfn"> sn500=function(v){return 1000-Math.floor(v*250);}</constantjavascript>
+ <constantjavascript substitution="jsfn"> n300=function(v){return Math.floor(v*300);}</constantjavascript>
+ <constantjavascript substitution="jsfn"> n50=function(v){return 0+Math.floor(v*301);}</constantjavascript>
+ <constantjavascript substitution="jsfn"> sn50=function(v){return 300-Math.floor(v*301);}</constantjavascript>
+ <constantjavascript substitution="ghgh">  midx=function(v){return 500+((v-0.5)*500)}</constantjavascript>
+ 
+ <constantjavascript substitution="ghgh">var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+byteToHex=function(b) {b=Math.floor(b*256);return hexChar[(b >> 4) &amp;amp; 0x0f] + hexChar[b &amp;amp; 0x0f];}</constantjavascript>
+<rowtype tagname="//n[@k1>0.8]" max="200">
+ <variable tagname="@k2" substitution="%z"  convert="n50" />
+ <variable tagname="@k2" substitution="%sz"  convert="sn50" />
+ <variable tagname="@k1" substitution="%y"  convert="n300" />
+ <variable tagname="@k0" substitution="%x"  convert="n500" />
+ <variable tagname="@k0" substitution="%sx"  convert="sn500" />
+ <variable tagname="@k0" substitution="%mx"  convert="midx" />
+ 
+ <variable tagname="@k2" substitution="%h2"  convert="byteToHex" />
+ <variable tagname="@k1" substitution="%h1"  convert="byteToHex" />
+ <variable tagname="@k0" substitution="%h0"  convert="byteToHex" />
+ <html>
+    <path d="M0 %y Q %x %sz 500 150 %sx %z 1000 %y" stroke="#%h1%h2%h0" fill="none" stroke-width="1"/>
+    <path d="M0 %y Q 250 %sz %mx 150 750 %z 1000 %y" stroke="#%h1%h2%h0" fill="none" stroke-width="1"/>
+ </html>
+</rowtype>
+<afterall><![CDATA[</svg>]]></afterall>
+<beforeall><![CDATA[<svg height="300" width="1000">]]></beforeall>
+</document></templatexml>
+<dataxml w="29%"> </dataxml>
+<userandomdata num="3" />
+</sample>

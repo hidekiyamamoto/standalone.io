@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sample>
+<templatexml w="69%">
+       <document>
+    <rowtype tagname="record">
+    <variable tagname="@id" substitution="%id"/>
+      <html><option value="%id">#INNERXML#</option>
+      </html>
+    </rowtype>
+  <afterall><![CDATA[</select>]]></afterall>
+  <beforeall><![CDATA[<select>]]></beforeall>
+</document>
+       </templatexml>
+<dataxml w="29%"> <document>
+  <record id="1">Goofy</record>
+  <record id="2">Pluto</record>
+  <record id="3">Donald</record>
+  <record id="4">Trump</record>
+</document></dataxml>
+</sample>
